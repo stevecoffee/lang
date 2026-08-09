@@ -2,8 +2,9 @@
 
 **Status:** design / pre-MVP  
 **Owner:** Steve  
+**Repo:** [github.com/stevecoffee/lang](https://github.com/stevecoffee/lang)  
 **Working names:** MetaCode (language), MetaCompiler (compile step), MetaBDD / MetaTester (tests) — **better names TBD**  
-**Keep work list:** `Meta coding language project` (`GKT:project`)
+**Keep work list:** `Meta coding language project` (`GKT:project`; `[GKT:repo] https://github.com/stevecoffee/lang`)
 
 Living product contract for a fresh agent. This file is the authority for
 **what** we are building and **what is out of scope**. Implementation layout,
@@ -15,7 +16,8 @@ MVP is scaffolded.
 | Need | Doc / surface |
 |---|---|
 | Living product contract | **this file (SPEC.md)** |
-| Operational work list | Keep **`Meta coding language project`** (`GKT:project`; bind `[GKT:repo]` when remote exists) |
+| Source repository | [github.com/stevecoffee/lang](https://github.com/stevecoffee/lang) (`origin`) |
+| Operational work list | Keep **`Meta coding language project`** (`GKT:project`; `[GKT:repo] https://github.com/stevecoffee/lang`) — resolve with `gkt list find-by-repo` from this worktree |
 | Implementation / layout / tests | *not yet* (add `IMPLEMENTATION.md` when code lands) |
 | Closed archaeology | *not yet* (add `HISTORY.md` as decisions close) |
 
@@ -183,7 +185,7 @@ Track here until closed (then move rationale to HISTORY when that file exists).
 | D4 | How much of compile is deterministic vs model-filled | Lean deterministic structure, model for bodies |
 | D5 | Identity of meta units across recompiles | Stable IDs vs path-based names |
 | D6 | First decompile scope | Whole repo vs module; how tests/docs feed in |
-| D7 | Repo remote + Keep `[GKT:repo]` binding | Bind after `origin` exists |
+| D7 | Repo remote + Keep `[GKT:repo]` binding | **Closed 2026-08-09:** `origin` = `https://github.com/stevecoffee/lang.git`; Keep list stamped `[GKT:repo] https://github.com/stevecoffee/lang` |
 
 ---
 
@@ -224,3 +226,4 @@ Track here until closed (then move rationale to HISTORY when that file exists).
 | Date | Change |
 |---|---|
 | 2026-08-09 | Initial SPEC from Keep list `Meta coding language project` scope and backlog themes; repo initialized. |
+| 2026-08-09 | Pushed to GitHub (`stevecoffee/lang`); Keep `[GKT:repo]` bound; D7 closed. |
