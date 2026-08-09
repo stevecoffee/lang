@@ -1,47 +1,25 @@
-# Playbook: compile run
+# Playbook: leaf compile
 
-Closed-context **greenfield** compile. Product background: `SPEC.md` §1.1–1.2 (do **not** feed SPEC into the agent).
-
-## Goal
-
-```text
-compile(language_definition, metacode) → machine_code + tests + compile_report
-```
+MVP: **one leaf meta → one code file.** Collections do not emit.
 
 ## Inputs (only these)
 
-| Input | Path (repo defaults) |
-|-------|----------------------|
-| Language definition | `docs/language.md` |
-| MetaCode | e.g. `examples/todo/meta.md` |
-| Skill | `skills/metacompile/SKILL.md` |
-
-## Forbidden
-
-- Full `SPEC.md`, Keep notes, chat history, “also do X”
-- Unrelated repo files
-- Existing `machine/` tree as authority (greenfield: emit fresh or replace generated outputs only as skill states)
-- Inventing modules/APIs not present in meta
+| Input | Notes |
+|-------|--------|
+| `docs/language.md` | Language definition |
+| One **leaf** MetaCode file | e.g. not the whole-app collection until refined |
+| Optional parent collections | Context only |
+| `skills/metacompile/SKILL.md` | Skill |
 
 ## Steps
 
-1. Start a **fresh** agent turn / subagent (no inherited thread).  
-2. Load **only** the three inputs above.  
-3. Invoke the metacompile skill procedure.  
-4. Write machine code + tests under the example’s `machine/` (or path meta declares).  
-5. Write a short compile report next to the emit (e.g. `machine/COMPILE_REPORT.md`).  
-6. Run host typecheck/tests outside the pure compile context if available.  
-7. If the model needed undeclared facts, **fix language def or meta** — do not widen context next time.
+1. Fresh agent turn.  
+2. If the meta is still a collection / whole product, **stop** — split to leaves first.  
+3. Run metacompile → exactly one source file under e.g. `examples/<name>/machine/`.  
+4. Read compile report for choices and “needs other leaves.”  
 
-## Brownfield
+## Forbidden
 
-Not this playbook. Use a separate brownfield skill/mode when defined (meta + declared existing machine + reconcile rules).
-
-## Checklist
-
-- [ ] Fresh context  
-- [ ] Only language def + meta + skill  
-- [ ] Structure/names match meta  
-- [ ] Tests co-emitted from meta scenarios  
-- [ ] Compile report written  
-- [ ] Gaps filed into language def or meta (not into chat lore)
+- Ambient chat requirements  
+- Editing user text above `# Agent`  
+- Multi-file emit from one leaf  

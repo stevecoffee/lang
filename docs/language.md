@@ -1,7 +1,7 @@
 # MetaCode — language definition (loadable)
 
-**Status:** stub / Phase 1 (content first; format later)  
-**Audience:** anyone describing software in plain language; agents on compile/decompile runs  
+**Status:** stub / Phase 1 (MVP constraints locked; format still deferred)  
+**Audience:** humans and agents on compile/decompile runs  
 **Not this file:** product phases, Keep, chrome — see `SPEC.md` (do **not** load SPEC into a pure compile run).
 
 Working names: **MetaCode**, **MetaCompiler** / compile skill, **MetaBDD**. Better names TBD.
@@ -12,195 +12,195 @@ Working names: **MetaCode**, **MetaCompiler** / compile skill, **MetaBDD**. Bett
 
 **Meta is source. AI write is compile. Classic code is machine language.**
 
-| Layer | Who it’s for | Role |
-|-------|----------------|------|
-| **MetaCode** | Humans (including **non-programmers**) | What the system is and does — hierarchical, plain language |
-| **Compile** | LLM / later tools | Turn meta into classic code + tests; **fill in implementation** |
-| **Classic code** | Machines and programmers when needed | Runnable result |
+| Layer | Role |
+|-------|------|
+| **MetaCode** | Hierarchical description of the system — human-editable |
+| **Compile** | Emit classic code (+ tests) from meta; fill implementation where meta is silent |
+| **Classic code** | Runnable substrate |
 
-Meta is **not** a programming language in disguise. If only engineers can write it, we failed.
+**Inspiration (not a hard rule):** meta should stay approachable — plain language where possible, usable by non-programmers for upper nodes. That is a design bias, not a gate. Technical authors may write precise leaves.
 
 ---
 
-## 2. Who writes meta / who decides what
+## 2. MVP structural constraint (firm)
 
-### 2.1 Accessible to non-programmers
+### 2.1 Leaf: one meta file → one code file
 
-Authors describe **intent, behavior, and experience** in ordinary language (and simple structure).
+For **leaf** MetaCode nodes:
 
-They should **not** need to specify:
+```text
+one MetaCode file  compiles into  one actual source code file
+```
 
-- modules, packages, file layout  
-- frameworks, types, storage engines  
-- algorithms, unless the *product* cares about a particular approach  
+That is the bottom of the hierarchy for MVP. No multi-file emit from a single leaf. No one leaf “is the whole app’s code.”
 
-Those are **implementation details**. The compile step (LLM today) chooses them, records choices in a compile report, and must still honor anything the meta *did* state.
+**Implications:**
 
-### 2.2 What belongs in meta vs compile
+- Modularize the meta tree so leaves match a sensible **code file** grain.  
+- Compile runs are naturally **per leaf** (plus language def + skill; parents only as needed for context).  
+- Tests for that file may live beside it or as the host project requires; the **primary** compile product of a leaf is **one code file**.
 
-| In MetaCode (author) | At compile (LLM / tool) |
-|----------------------|-------------------------|
-| What the thing is | How files and modules are cut |
-| What someone can do | Frameworks, libraries, idioms |
-| What they see / press / say | Exact data schema (unless author stated it) |
-| Rules that matter to the user (“empty title doesn’t stick”) | Algorithms and internal APIs |
-| Durable facts (“still there after restart”) | Host language details (unless author fixed them) |
+### 2.2 Collection (non-leaf) meta files
 
-If meta is silent on an implementation choice, **compile decides** — do not force the author to invent programmer structure to get a build.
+Not every meta file is a leaf. **Collection** (abstract) nodes group children:
 
-If meta states a product rule, **compile must not “improve” it away**.
+| Kind | Compiles to code file? | Role |
+|------|------------------------|------|
+| **Leaf** | **Yes — exactly one** | Describes one code file’s responsibility and behavior |
+| **Collection** | **No** (MVP) | Groups leaves / other collections; product or package overview; navigation in the tree |
 
-### 2.3 Format is deferred
+Collections may later gain optional “index” or barrel emits; **MVP: collections do not emit code.** They organize and constrain.
 
-Nail **content and hierarchy** first. Do **not** block on markdown style, required headings, or formal grammar.
+Root files (e.g. `L0.Todo.md`) are typically **collections** until the tree is refined into file-shaped leaves.
 
-Plain notes, lists, keybindings, short prose — all fine while we learn what matters. Formalize spelling/shape later.
+### 2.3 Decompile (MVP: keep it that simple)
 
-### 2.4 User text vs Agent section (hard rule)
+```text
+one source code file  decompiles into  one leaf MetaCode file
+```
 
-Each meta node may have two zones:
+- Declared sources that are code files each produce (or update) one leaf meta file.  
+- Collections are built by **grouping** leaves (folders, packages, or explicit parent meta) — not by inventing a parallel taxonomy.  
+- MVP does not require fancy multi-file fusion into one mega-meta.
+
+### 2.4 Refine until leaves are file-shaped
+
+Hierarchy above the leaves can follow user-facing or design cuts. Before implementer compile, **split/merge until each leaf is something you’d put in one code file.** If a node is still “the whole UI + store + keys,” it is not a leaf yet.
+
+---
+
+## 3. Who writes meta / who decides what
+
+### 3.1 Product vs implementation
+
+| In MetaCode | At compile (for a leaf) |
+|-------------|-------------------------|
+| What this **file’s** code is for | Frameworks, idioms inside that file |
+| Behavior and rules this file must honor | Exact algorithms, types, helpers |
+| Public surface this file exposes (if stated) | Private helpers within the file |
+| Checks that apply to this unit | How tests are wired in the host layout |
+
+If meta is silent on implementation inside the file, **compile decides** and reports choices.  
+If meta states a rule, **compile must not drop it.**
+
+### 3.2 Format is deferred
+
+Content and hierarchy first. Formal grammar later. Plain notes are fine.
+
+### 3.3 User text vs Agent section (hard rule)
 
 | Zone | Who writes | Holds |
 |------|------------|--------|
-| **User** (everything above `# Agent`, or the whole file if no Agent heading) | Human author | Specifications — product truth |
-| **`# Agent`** (heading and below) | Agents only | Assumptions, open questions, generated refinement notes |
+| **User** (everything above `# Agent`) | Human author | Specifications |
+| **`# Agent`** | Agents only | Assumptions, open questions, notes, child pointers |
 
-**Agents must not modify user text.** Only add or edit under `# Agent`.
-
-If the file has no `# Agent` heading yet, the agent may **append** one at the end; it still must not alter lines above it.
-
-Human authors may edit either zone; they own the user zone completely.
-
-This preserves the distinction between **what the user specified** and **what the agent assumed or generated**.
+**Agents must not modify user text.** Only edit under `# Agent`.  
+If `# Agent` is missing, the agent may **append** it; never alter lines above.
 
 ---
 
-## 3. Hierarchy (core, not optional)
+## 4. Hierarchy
 
-**Vision:** MetaCode is a **tree of units**, not one giant file that describes everything.
+**Tree of meta files**, not one blob.
 
-| Level | Holds |
-|-------|--------|
-| **Root** | Whole product in one breath — name, kind, main experience |
-| **Children** | One concern each (e.g. list navigation, editing, saving) when that concern needs room |
-| **Deeper** | Only when working that slice |
+| Node kind | Typical content |
+|-----------|-----------------|
+| **Collection** | Name, purpose of the group, list of children, constraints that apply to the whole |
+| **Leaf** | Enough to implement **one** code file; maps 1:1 at compile |
 
-Same spirit as small code files: **one mental page per node**. Detail goes **down** into children, not into a longer root essay.
+**Working-memory budget:** each file stays roughly one screen of real content. Split rather than thicken.
 
-### 3.1 For now (before multi-file)
-
-We may keep a single file and use **sections as stand-ins for child nodes**.
-
-Treat a clear section as a future file/node. When content outgrows working memory, **split** (section → file) rather than keep growing one blob.
-
-Do **not** treat “one `meta.md` for the whole app forever” as the design.
-
-### 3.2 Working-memory budget (per node)
-
-Per **node** (file later; section or file now):
-
-| Budget | Guideline |
-|--------|-----------|
-| Length | About one screen when skimming |
-| Ideas on the page | Only what you need for **this** unit right now |
-
-If it doesn’t fit, it’s a signal to **add a child**, not to write denser jargon.
-
-### 3.3 Compile and hierarchy
-
-Compile may run on **one subtree** (one node + what it needs from parents). Parent gives context; child owns local detail. Avoid loading an entire monorepo-sized meta into one run when a branch will do.
+**Children** match modularization that can bottom out in **code files** (user-facing names OK at the top; file-shaped names as you near leaves).
 
 ---
 
-## 4. What to say (content, not template)
+## 5. What to say (content, not template)
 
-No required section list. Prefer **positive** description.
+Prefer **positive** description. No required heading list.
 
-Useful kinds of content (use only what helps):
+Useful: what it is, what it does, controls/rules that matter, checks.  
+**“What it is not”** is not a default section.
 
-- **What it is** — short  
-- **What you can do** — behaviors  
-- **How it feels / controls** — e.g. keybindings, layout in user terms (“full-screen list”)  
-- **Rules that matter** — user-visible constraints  
-- **Checks** — often “the does-list works,” including after restart if that matters  
-
-**“What it is not”** is **not** a default section. Long exclusion lists are usually an anti-pattern. Prefer a clear positive description. A rare, local “not X” is fine when the positive wording would otherwise mislead.
-
-Avoid: scenario ID catalogs, module maps, and programmer scaffolding unless a **programmer author** deliberately wants them in a **child** node about implementation.
+For **leaves**, also useful: what this code file owns vs what it calls/imports (in plain language).
 
 ---
 
-## 5. Other hard rules
+## 6. Other rules
 
-### 5.1 No redundancy
+### 6.1 No redundancy
 
-Say each fact once. Refine in children; don’t copy the same rule everywhere.
+Each fact once; refine in children.
 
-### 5.2 Behavior and checks together
+### 6.2 Behavior and checks together
 
-What it does and how we know it works stay close (same coin). No parallel “test novel” required. Obvious checks can be implied (“still works after restart”).
+Same coin at the unit that owns the behavior (often the leaf).
 
-### 5.3 Embed, don’t doc-drift
+### 6.3 Embed, don’t doc-drift
 
-When code exists, prefer names/structure that reflect meta over a second hand-maintained doc tree.
+Code should reflect meta via naming/structure where possible.
 
-### 5.4 Prefer plain over cryptic
+### 6.4 Prefer clear over cryptic
 
-Words a non-programmer would use. No fake precision.
+Plain language when it works; precision when the author wants it.
 
 ---
 
-## 6. Compile
+## 7. Compile
+
+### 7.1 Leaf compile (primary MVP op)
 
 ```text
-compile(language_definition, metacode_unit) → machine_code + tests + compile_report
+compile_leaf(language_definition, leaf_meta [, parent_context])
+  → one_code_file + tests_as_needed + compile_report
 ```
 
-**Inputs only:** this language definition; the MetaCode unit (node/subtree); the compile skill.  
-**Not inputs:** full SPEC, ambient chat, undeclared repo files, “also remember…”
+**Inputs:** language def; **one leaf** MetaCode file; compile skill; optional short parent collection(s) for context only.  
+**Output:** **exactly one** source file (path recorded in report); plus report (choices, gaps).
 
-**Compile must:**
+**Must not:** emit multiple peer source files from one leaf; invent sibling modules that should be other leaves.
 
-1. Treat meta as **product truth**; fill **implementation** where meta is silent.  
-2. Honor explicit user-facing rules and described controls.  
-3. Emit tests from stated/implied behavior.  
-4. Report implementation choices, gaps, and questions — especially decisions a non-programmer never wrote down.
+### 7.2 Collection compile (MVP)
 
-**Brownfield** (meta + existing code + reconcile) is a separate mode later.
+Collections **do not** emit code. A “compile the app” workflow means: compile **each leaf** (separately or batched), using collections only as context/index.
+
+### 7.3 Closed context
+
+No ambient chat, no full SPEC, no undeclared repo files as hidden requirements.
 
 ---
 
-## 7. Decompile
+## 8. Decompile
+
+### 8.1 File decompile (primary MVP op)
 
 ```text
-decompile(language_definition, declared_sources) → metacode_tree [+ unknowns]
+decompile_file(language_definition, one_code_file)
+  → one_leaf_meta_file [+ unknowns]
 ```
 
-**Inputs only:** language definition; declared sources; decompile skill.
+**Inputs:** language def; **one** declared code file; decompile skill.  
+**Output:** **one** leaf MetaCode file describing that code file’s role and behavior (not a line-by-line paste).
 
-**Decompile must:**
+### 8.2 Building the tree
 
-1. Produce **hierarchical** meta (root + children as needed), plain language first.  
-2. Capture user-facing behavior and shape — not a code tour.  
-3. Stay within working-memory budget per node; split instead of one giant file.  
-4. Leave implementation detail out of meta unless it is truly product-level.  
-5. Mark unknowns rather than inventing product facts.
+After per-file leaves exist, add **collection** parents to group them (by folder, package, or human structure). MVP can be flat leaves first, collections second.
 
 ---
 
-## 8. Repo layout (examples)
+## 9. Repo layout (examples)
 
-- Examples: `examples/<name>/`  
-- Meta today: `examples/<name>/meta.md` (sections ≈ future nodes; multi-file tree later)  
-- Emit: `examples/<name>/machine/`  
+```text
+examples/<name>/
+  L0.*.md          # often a collection (product root)
+  …                # further collection / leaf meta files
+  machine/         # emitted code files (one per compiled leaf)
+```
 
 ---
 
-## 9. Document control
+## 10. Document control
 
 | Version | Notes |
 |---------|--------|
-| 0.1 | Initial stub |
-| 0.2 | Working-memory budget |
-| 0.3 | Non-programmer audience; LLM owns implementation detail; hierarchy as multi-node tree (sections as stand-in); format deferred; “not this” not default |
-| 0.4 | User vs `# Agent` zones; agents only edit Agent section |
+| 0.1–0.4 | Earlier stubs (budget, zones, non-programmer emphasis) |
+| 0.5 | **MVP firm:** leaf meta file ↔ one code file; collections group only; decompile = one file → one leaf; non-programmer access = inspiration not hard rule |

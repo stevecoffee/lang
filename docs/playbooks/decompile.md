@@ -1,47 +1,22 @@
-# Playbook: decompile run
+# Playbook: file decompile
 
-Closed-context lift from declared sources into MetaCode. Product background: `SPEC.md` §1.1–1.2 (do **not** feed SPEC into the agent).
-
-## Goal
-
-```text
-decompile(language_definition, declared_sources) → metacode [+ unknowns]
-```
+MVP: **one code file → one leaf meta file.**
 
 ## Inputs (only these)
 
-| Input | Path (repo defaults) |
-|-------|----------------------|
-| Language definition | `docs/language.md` |
-| Declared sources | Explicit path list (code, tests, docs) — pinned for the run |
-| Skill | `skills/metadecompile/SKILL.md` |
-
-## Forbidden
-
-- Undeclared repo paths  
-- Golden/reference meta on **blind** lifts  
-- Ambient chat goals not evidenced in sources  
-- Full `SPEC.md` as input  
+| Input | Notes |
+|-------|--------|
+| `docs/language.md` | Language definition |
+| One code file | Declared path only |
+| `skills/metadecompile/SKILL.md` | Skill |
 
 ## Steps
 
-1. Start a **fresh** agent turn / subagent.  
-2. Write down the **declared source set** (paths) before the run.  
-3. Load **only** language def + those sources + decompile skill.  
-4. Emit MetaCode in the language’s shape (e.g. `examples/<name>/meta.md` or a trial path).  
-5. Optionally attach unknowns / confidence if the skill requires it.  
-6. Critique: could a compile skill rebuild behavior without code paste?  
-7. Fold gaps into `docs/language.md` — do not keep them as chat-only lore.
+1. Fresh agent turn.  
+2. Run metadecompile → one leaf MetaCode file.  
+3. Optionally add collection parents later to group leaves.  
 
-## Blind lift (language test)
+## Forbidden
 
-When testing the language: hide any hand-written golden meta; declare only machine sources; compare lift to golden offline (outside the decompile agent).
-
-## Checklist
-
-- [ ] Fresh context  
-- [ ] Declared source set written down  
-- [ ] Only language def + declared sources + skill  
-- [ ] Meta is hierarchical and editable  
-- [ ] Not a line-by-line code paraphrase  
-- [ ] Unknowns recorded rather than faked  
+- Whole-repo undeclared reads  
+- One mega-meta for many code files in a single leaf (MVP)  

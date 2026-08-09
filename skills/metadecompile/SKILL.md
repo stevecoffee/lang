@@ -1,52 +1,51 @@
 ---
 name: metadecompile
 description: >
-  Closed-context MetaCode decompile run: lift declared classic sources into
-  hierarchical MetaCode using only the language definition. Use when decompiling,
-  lifting a codebase to meta, or /metadecompile. Do not use for free-form summary.
+  Closed-context MetaCode decompile: one source code file → one leaf meta
+  file. Use for /metadecompile or lifting a single file. Do not fuse a whole
+  program into one mega-meta leaf.
 ---
 
-# MetaDecompile (closed context)
+# MetaDecompile (closed context) — one code file → one leaf meta
 
-You are executing a **pure decompile** from declared classic sources into MetaCode.
+## MVP rule
+
+**One source code file decompiles into one leaf MetaCode file.**
+
+Collections (parents that group leaves) are a separate step after per-file leaves exist.
 
 ## Context rules (mandatory)
 
 **You may read and use only:**
 
-1. The **language definition** file provided for this run (default: `docs/language.md`)  
-2. The **declared source set** for this run (explicit paths of code, tests, and/or docs — nothing else)  
-3. **This skill** text  
+1. **Language definition** (`docs/language.md`)  
+2. **One** declared code file  
+3. **This skill**  
 
 **You must not:**
 
-- Read undeclared paths, `SPEC.md`, golden meta (on blind lifts), or unrelated files  
-- Paste implementation into meta as a line-oriented code dump  
-- Invent product goals not evidenced in the declared sources  
-- Use chat lore about what the system “should” do  
-
-If sources are incomplete, record **unknowns** rather than fabricating certainty.
+- Read undeclared paths or golden meta on blind lifts  
+- Paste the whole file as meta prose  
+- Produce multiple leaf files from one code file (MVP)  
+- Edit unrelated meta user zones  
 
 ## Procedure
 
-1. Inventory declared sources (modules, surfaces, tests, persistence).  
-2. Emit **short** MetaCode a human can hold in working memory (language §2.1 budget): What, Not, Shape, Does, Check — more detail only as child nodes if needed.  
-3. Prefer **behavior and shape** over file tours and algorithm dumps.  
-4. **No redundancy**; don’t invent scenario IDs or module tables unless they clarify.  
-5. Emit MetaCode to the path the operator specifies.  
-6. Optionally emit `DECOMPILE_REPORT.md` with source set, unknowns, confidence.
+1. Read the one code file.  
+2. Emit **one** leaf MetaCode file: what this file is for, what it does, rules, checks — human-editable, not a line tour.  
+3. Include `# Agent` only if needed for unknowns/assumptions about unclear code.  
+4. Optional short decompile report: path mapping, unknowns.
 
 ## Output contract
 
 | Output | Required |
 |--------|----------|
-| Short, human-editable MetaCode | Yes |
-| Within working-memory budget at each file | Yes |
-| Verbatim code paste as meta | **No** |
-| Unknowns called out | Yes when uncertain |
+| One leaf MetaCode file | Yes |
+| One code file in → one meta file out | Yes |
+| Whole-program mega-meta from one file | **No** |
 
 ## Success criteria
 
-- A developer would actually keep this meta as the mental model  
-- Compile could rebuild behavior under closed context  
-- No undeclared inputs were used  
+- Mapping is obvious: code path ↔ meta path  
+- Leaf could recompile to one file under metacompile  
+- Unknowns marked, not faked  

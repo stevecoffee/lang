@@ -26,25 +26,24 @@ Living product contract. This file owns **thesis, principles, phase scope, and h
 
 ## 1. Purpose
 
-Create an **intermediate higher-level language** (working name: MetaCode) for describing software as people actually think about it: progressive **hierarchical** description, condensation, and analysis — not line-oriented source as the primary artifact.
+Create an **intermediate higher-level language** (working name: MetaCode) for hierarchical description of software that **bottoms out in the same modularization as code**.
 
-**Accessible to non-programmers.** Meta states product intent, behavior, and experience in plain language. **Implementation detail** (modules, frameworks, file layout, algorithms) is chosen at **compile** time by the LLM (later: tools), not required in meta.
-
-**Thesis (keep this if you keep only one idea)**
+**Thesis**
 
 > **Meta is source. AI write is compile. Classic code is machine language.**
 
-That is not another prompt framework. It is a claim about **who owns product truth** (meta) versus **who fills implementation** (compile / model).
+**MVP firm constraint:** a **leaf** MetaCode file compiles to **exactly one** source code file. **Collection** meta files group children and do not emit code (MVP). Decompile MVP: **one code file → one leaf** meta file.
+
+**Inspiration (not a hard rule):** keep meta approachable for non-programmers at upper nodes. Precision at leaves is fine.
 
 | Layer | Role |
 |---|---|
-| **Meta language** (MetaCode or successor) | Primary authoring surface — hierarchical, plain language |
-| **AI-assisted generation** | The *compile* step — implementation + classic code (+ tests) |
-| **Classic code** (TS, Python, …) | The new *machine language* — executable substrate |
+| **Collection meta** | Abstract grouping — product/package overview, child list |
+| **Leaf meta** | Describes one code file; 1:1 compile target |
+| **Compile** | Leaf → one code file (+ tests as needed); fill implementation gaps |
+| **Classic code** | Machine language — one file per leaf |
 
-**Hierarchy is real:** many nodes (eventually many files), not one giant meta blob. Early on, **sections may stand in for child nodes**. **Format later** — content and hierarchy first.
-
-Compiling a unit may mean refining into child meta, then into conventional code. Drift and redundancy are managed deliberately.
+**Format later.** Content + hierarchy first. Normative detail: [`docs/language.md`](docs/language.md).
 
 ### 1.1 How compile and decompile are implemented (normative for now)
 
@@ -62,30 +61,30 @@ Skills/prompts are the first real MetaCompiler / MetaDecompiler interface. A fut
 
 Compile and decompile must be **reproducible runs**, not polluted chat sessions. Ambient agent context (repo wander, prior failures, operator asides, unrelated SPEC phase prose) is **out of band**.
 
-**Compile** is a pure function over a fixed input set:
+**Leaf compile** (primary):
 
 ```text
-compile(language_definition, metacode) → machine_code + tests + compile_report
+compile_leaf(language_definition, leaf_meta [, parents]) → one_code_file + report
 ```
 
-| Allowed in compile context | Forbidden by default |
+| Allowed | Forbidden by default |
 |---|---|
-| **Language definition** (loadable def only) | Full SPEC dump (phases, someday, open decisions) unless folded into the def |
-| **MetaCode** for the unit being compiled | Ambient chat / “also remember…” |
-| The **compile skill/prompt** text itself | Unrelated repo files, plans, READMEs |
-| | Existing machine code (**greenfield**); brownfield is a **separate mode/skill** |
+| Language definition | Full SPEC as compile input |
+| **One leaf** MetaCode file (+ optional parent collections for context) | Ambient chat; undeclared files |
+| Compile skill | Emitting **multiple** peer code files from one leaf |
+| | Existing machine as hidden requirements (greenfield) |
 
-**Decompile** is a pure function over a fixed input set:
+**File decompile** (primary MVP):
 
 ```text
-decompile(language_definition, declared_sources) → metacode [+ unknowns/confidence if defined]
+decompile_file(language_definition, one_code_file) → one_leaf_meta
 ```
 
-| Allowed in decompile context | Forbidden by default |
+| Allowed | Forbidden by default |
 |---|---|
-| **Language definition** | Golden/reference meta (for blind lifts) |
-| **Declared sources only** (code, tests, docs as the skill pins) | Undeclared repo paths, chat goals not in sources |
-| The **decompile skill/prompt** text itself | |
+| Language definition | Golden meta on blind lifts |
+| **One** declared code file | Undeclared paths |
+| Decompile skill | Mega-meta that tries to be the whole program in one leaf |
 
 **Brownfield recompile** (meta + existing machine + drift rules) is a **third** operation/mode — not overloaded onto pure greenfield compile.
 
@@ -98,33 +97,30 @@ decompile(language_definition, declared_sources) → metacode [+ unknowns/confid
 
 ### 1.3 Near-term posture
 
-Define the language for **humans (including non-programmers) and LLMs**. Formal grammar/formatting and automated scripted tooling wait until content and hierarchy are solid. Compile/decompile are closed-context skills/prompts first; compile is expected to supply implementation detail.
+MVP: **leaf ↔ one code file**, collections as groups only, skills for compile/decompile, closed context. Non-programmer-friendly upper meta is **inspiration**. Formal grammar and scripted toolchains later.
 
 ---
 
 ## 2. Principles
 
-### 2.1 Hierarchy as the unit of work
+### 2.1 Hierarchy bottoms out at code files
 
-Progressive hierarchical description, condensation, and analysis is the right unit. Compile is **tree expansion** (and eventually emit to machine code), not free-form string generation.
+Progressive hierarchical description is the unit of work. The tree has two node kinds for MVP:
 
-**Not one giant file.** The system is a **tree of meta nodes**. Root = whole product in one breath; children = one concern each. Same idea as small source files. Until multi-file meta is worth the friction, **sections in one file stand in for child nodes** — then split when a section outgrows working memory.
+- **Collection** — abstract grouping; no code emit  
+- **Leaf** — **one meta file ↔ one code file** at compile/decompile  
 
-A meta node is not classic code with comments; it is a unit of human understanding. Child nodes refine parents; condensation rolls detail upward without losing requirements.
+Refine until leaves are file-shaped. Collections (e.g. product root) organize; they are not a substitute for leaves.
 
-**Working-memory budget:** each node stays small (about one screen). Detail goes **down**, not into a longer essay. Normative detail: [`docs/language.md`](docs/language.md).
-
-Compile **by subtree** when needed; parents give context, not the entire tree dumped into every run.
+**Working-memory budget:** each meta file stays small. Detail goes to children. Normative: [`docs/language.md`](docs/language.md).
 
 ### 2.2 Product in meta; implementation at compile
 
-**Meta owns product truth. Compile owns implementation fill.**
+**Meta owns specified truth for that node. Compile fills implementation inside the single emit file.**
 
-Authors (including non-programmers) state what it is, what you can do, and rules that matter to users. They do **not** have to specify modules, frameworks, or file trees.
+Where a leaf pins behavior or surface, honor it. Where silent, choose simply and report. Do not emit extra peer files from one leaf — those need their own leaves.
 
-Where meta **does** pin a user-facing structure or rule, compile honors it. Where meta is silent on engineering structure, the LLM chooses simply and reports choices. Greenfield and brownfield modes both required eventually (separate).
-
-Closed context makes bad inventing of *product* scope visible; inventing *implementation* under clear product meta is expected.
+User vs `# Agent` zones: agents only edit under `# Agent` ([`docs/language.md`](docs/language.md) §3.3).
 
 ### 2.3 Tests as the same language
 
@@ -360,3 +356,4 @@ Stages are **skill-mediated** until tooling exists. Each arrow is a closed-conte
 | 2026-08-09 | Scaffold: `docs/language.md`, playbooks, `skills/metacompile|metadecompile`, `examples/todo` (full-screen todo editor meta); D10 closed; D9 in-repo skills. |
 | 2026-08-09 | Critique pass: thin `examples/todo/meta.md`; language §2.1 working-memory budget / progressive disclosure; SPEC §2.1 notes concept limit per file. |
 | 2026-08-09 | Non-programmer authors; LLM fills implementation; hierarchy as multi-node tree (sections as stand-in); format deferred; language v0.3. |
+| 2026-08-09 | MVP: leaf meta ↔ one code file; collections group only; decompile per file; non-programmer access = inspiration; language v0.5. |

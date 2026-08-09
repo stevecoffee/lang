@@ -1,55 +1,56 @@
 ---
 name: metacompile
 description: >
-  Closed-context MetaCode compile run: emit classic machine code and tests from
-  language definition + MetaCode only. Use when compiling meta, implementing from
-  MetaCode, or /metacompile. Do not use for product planning or ambient repo coding.
+  Closed-context MetaCode leaf compile: one leaf meta file → exactly one
+  source code file. Use for /metacompile or implementing a leaf. Not for
+  ambient repo coding or rewriting user meta above # Agent.
 ---
 
-# MetaCompile (closed context)
+# MetaCompile (closed context) — leaf → one code file
 
-You are executing a **pure greenfield compile** of MetaCode into classic machine code.
+## MVP rule
+
+**One leaf MetaCode file compiles into exactly one source code file.**
+
+Collection meta files do **not** emit code; they only provide context / grouping.
 
 ## Context rules (mandatory)
 
 **You may read and use only:**
 
-1. The **language definition** file provided for this run (default in this repo: `docs/language.md`)  
-2. The **MetaCode** artifact provided for this run (e.g. `examples/todo/meta.md`)  
-3. **This skill** text  
+1. **Language definition** (`docs/language.md`)  
+2. **One leaf** MetaCode file (the compile target)  
+3. Optional **parent collection** meta files if the operator explicitly includes them for context  
+4. **This skill**  
 
 **You must not:**
 
-- Read `SPEC.md`, other examples, playbooks, Keep state, or unrelated repo files  
-- Use prior chat instructions that are not written in the MetaCode or language definition  
-- Treat existing `machine/` code as a source of new requirements (greenfield emit)  
-- Invent modules, public APIs, routes, commands, or file layout not authorized by MetaCode  
+- Read `SPEC.md`, unrelated repo files, or ambient chat requirements  
+- Edit user text above `# Agent` in any meta file  
+- Emit **multiple** peer source files from one leaf  
+- Invent other modules that should be separate leaves (put that in the report as “needs its own leaf”)  
 
-Meta may be written by **non-programmers**. Missing *implementation* detail is normal — **you choose it**. Missing *product* behavior is a gap — **report it**, don’t invent major features.
-
-**User vs Agent zones:** If a meta file has `# Agent`, never edit text above it. Only write under `# Agent` (assumptions, open questions, notes). User lines are specifications.
+Missing *implementation inside this file* → you choose, report it.  
+Missing *behavior this file must implement* → report gap; do not invent major product scope.
 
 ## Procedure
 
-1. Read MetaCode as a **hierarchy** (sections ≈ child nodes; later separate files). Use the unit you were given, not the whole universe.  
-2. **Product truth** = what the meta says in plain language (what it is, what you can do, controls, user-visible rules).  
-3. **Implementation** (modules, files, frameworks, schemas, algorithms) = your job when meta is silent; keep it simple; list choices in the report.  
-4. Honor explicit user-facing rules and described controls (e.g. keybindings).  
-5. Emit **tests** from stated/implied behavior.  
-6. Write outputs to the path given (default: `examples/<name>/machine/`).  
-7. Write `COMPILE_REPORT.md`: implementation choices, product gaps, conflicts, questions.
+1. Confirm the target meta is a **leaf** (file-shaped unit). If it is still a whole-app blob, refuse emit and report: split into leaves first.  
+2. Honor user-zone specifications; use `# Agent` only as non-authoritative notes/assumptions.  
+3. Emit **exactly one** code file to the path given (default under `examples/<name>/machine/`).  
+4. Emit tests only as needed for this file’s behavior (host layout may add a test file — if so, note it; prefer not growing a second *feature* module).  
+5. Write `COMPILE_REPORT.md` (or a short report next to the emit): output path, choices, gaps, “should be other leaves.”
 
 ## Output contract
 
 | Output | Required |
 |--------|----------|
-| Machine source tree | Yes |
-| Tests from meta behavior | Yes |
-| `COMPILE_REPORT.md` (esp. implementation choices) | Yes |
-| Major product features not in meta | **No** |
+| **Exactly one** primary source file | Yes |
+| Compile report | Yes |
+| Extra peer source modules for other concerns | **No** |
 
 ## Success criteria
 
-- Non-programmer meta is enough to build something faithful  
-- Implementation was filled without demanding meta become code  
-- No undeclared inputs; product gaps reported, not silently assumed  
+- 1:1 leaf meta ↔ code file respected  
+- Closed context; no user-zone edits  
+- Gaps reported instead of silent product invention  

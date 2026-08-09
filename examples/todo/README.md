@@ -1,21 +1,14 @@
 # Example: Todo
 
-Full-screen text todo list.
-
 | File | Role |
 |------|------|
-| [meta.md](meta.md) | **L0** product — user spec + `# Agent` assumptions/questions |
-| [L1.md](L1.md) | **L1** behavior — next hierarchy level |
-| [machine/](machine/) | L4 emit target (after compile) |
+| [L0.Todo.md](L0.Todo.md) | Product root — treat as **collection** until refined into leaves |
+| [machine/](machine/) | Emitted code: **one file per compiled leaf** |
 
-## User vs Agent
+## MVP mapping
 
-- **User** text (above `# Agent`): human only — do not let agents rewrite it  
-- **`# Agent`**: agents may add assumptions, open questions, generated notes  
+- **Leaf** meta file ↔ **one** code file (compile / decompile)  
+- **Collection** meta (e.g. L0) groups children; does not emit code by itself  
+- Agents only edit under `# Agent` in meta files  
 
-Rule is in `docs/language.md` §2.4.
-
-## Compile (later)
-
-Closed context: language def + meta nodes + compile skill → `machine/`.  
-Prefer L1+ (and deeper when present) for implementer-style runs.
+See `docs/language.md` v0.5.
