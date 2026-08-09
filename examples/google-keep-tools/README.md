@@ -2,33 +2,43 @@
 
 Best-effort MetaCode lift of production modules from google-keep-tools.
 
-## Layout rule
+## Root (only these + emit)
 
-A **collection** is two siblings in the same folder:
+| File | Role |
+|------|------|
+| [meta.md](meta.md) | Product root collection |
+| [README.md](README.md) | This file |
+| [DECOMPILE_REPORT.md](DECOMPILE_REPORT.md) | Exercise notes |
+| [machine/](machine/) | Compile emit sink (empty) |
+
+## Meta body: `src/`
+
+Decompilation of **source** lives under **`src/`**. Other top-down examples may use different folder names; for this exercise `src/` is intentional.
 
 ```text
-backup.md          ← collection meta (constraints / child list)
-backup/            ← directory of children only (leaves)
-  backup.md        ← leaf ↔ backup.py
-  backup_format.md
+src/
+  backup.md          ← collection
+  backup/            ← leaves only
+    backup.md        ← leaf ↔ backup.py
+    backup_format.md
+    …
+  cli.md
+  cli/
   …
 ```
 
-- Collection file sits **one level up**, not inside the self-named directory.
-- Leaves live **only** in the directory; named by module stem (`items.md` ↔ `items.py`).
-- No `C.` / `L0.` / inner collection `meta.md`.
-- Product root: [meta.md](meta.md) plus collection pairs beside it.
+- Collection = `name.md` **beside** `name/` (not inside it).
+- Leaf names = module stem (`items.md` ↔ `items.py`).
+- Does not mirror the original repo tree; grouping is by concern.
 
 ## Collections
 
-- [backup.md](backup.md) / [backup/](backup/)
-- [cli.md](cli.md) / [cli/](cli/)
-- [config-paths.md](config-paths.md) / [config-paths/](config-paths/)
-- [extract-plan.md](extract-plan.md) / [extract-plan/](extract-plan/)
-- [keep-core.md](keep-core.md) / [keep-core/](keep-core/)
-- [list-meta.md](list-meta.md) / [list-meta/](list-meta/)
-- [review-ui.md](review-ui.md) / [review-ui/](review-ui/)
-- [sandbox.md](sandbox.md) / [sandbox/](sandbox/)
-- [scope-llm.md](scope-llm.md) / [scope-llm/](scope-llm/)
-
-See [DECOMPILE_REPORT.md](DECOMPILE_REPORT.md).
+- [src/backup.md](src/backup.md) / [src/backup/](src/backup/)
+- [src/cli.md](src/cli.md) / [src/cli/](src/cli/)
+- [src/config-paths.md](src/config-paths.md) / [src/config-paths/](src/config-paths/)
+- [src/extract-plan.md](src/extract-plan.md) / [src/extract-plan/](src/extract-plan/)
+- [src/keep-core.md](src/keep-core.md) / [src/keep-core/](src/keep-core/)
+- [src/list-meta.md](src/list-meta.md) / [src/list-meta/](src/list-meta/)
+- [src/review-ui.md](src/review-ui.md) / [src/review-ui/](src/review-ui/)
+- [src/sandbox.md](src/sandbox.md) / [src/sandbox/](src/sandbox/)
+- [src/scope-llm.md](src/scope-llm.md) / [src/scope-llm/](src/scope-llm/)
