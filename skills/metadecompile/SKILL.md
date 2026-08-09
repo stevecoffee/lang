@@ -32,20 +32,21 @@ Collections (parents that group leaves) are a separate step after per-file leave
 ## Procedure
 
 1. Read the one code file.  
-2. Emit **one** leaf MetaCode file: what this file is for, what it does, rules, checks — human-editable, not a line tour.  
-3. Include `# Agent` only if needed for unknowns/assumptions about unclear code.  
+2. Emit **one** leaf MetaCode file focused on **constraints and ownership**: purpose, invariants, boundaries, decisive contracts, checks — not a full public-API dump or line tour.  
+3. Optional: put symbol inventories under `# Agent` only if useful for navigation.  
 4. Optional short decompile report: path mapping, unknowns.
 
 ## Output contract
 
 | Output | Required |
 |--------|----------|
-| One leaf MetaCode file | Yes |
+| One leaf MetaCode file (constraint-shaped) | Yes |
 | One code file in → one meta file out | Yes |
+| Complete enumeration of helpers/behaviors as the main content | **No** |
 | Whole-program mega-meta from one file | **No** |
 
 ## Success criteria
 
 - Mapping is obvious: code path ↔ meta path  
-- Leaf could recompile to one file under metacompile  
+- A compiler could satisfy the constraints without the meta narrating every line  
 - Unknowns marked, not faked  

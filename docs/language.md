@@ -20,6 +20,24 @@ Working names: **MetaCode**, **MetaCompiler** / compile skill, **MetaBDD**. Bett
 
 **Inspiration (not a hard rule):** meta should stay approachable — plain language where possible, usable by non-programmers for upper nodes. That is a design bias, not a gate. Technical authors may write precise leaves.
 
+### 1.1 Constraints, not complete enumeration (core)
+
+MetaCode should define the **constraints** that must hold — not a full catalog of coding decisions, helper names, or every behavior step.
+
+| Meta should pin (when it matters) | Meta should leave implied / to compile |
+|-----------------------------------|----------------------------------------|
+| Purpose of this unit | Internal helpers and private structure |
+| Invariants and rules that must not be violated | Algorithms that satisfy those rules |
+| Boundaries (what this file owns vs must not own) | Framework idioms, local factoring |
+| User-visible contracts that change product meaning | Routine edge handling implied by the contract |
+| Checks that prove the constraints | Exhaustive scenario lists |
+
+If the **constraints are right**, most remaining decisions are **implied** and may be filled at compile (and reported). If meta tries to enumerate everything, it becomes a second source code — and loses the point of a higher language.
+
+**Author test:** would removing this sentence let compile make a wrong product decision? If no, it may not belong in meta.
+
+**Decompile test:** lift **constraints and ownership**, not a dump of every public symbol (symbol lists are optional Agent/debug aids, not the ideal user zone).
+
 ---
 
 ## 2. MVP structural constraint (firm)
@@ -71,17 +89,18 @@ Hierarchy above the leaves can follow user-facing or design cuts. Before impleme
 
 ## 3. Who writes meta / who decides what
 
-### 3.1 Product vs implementation
+### 3.1 Constraints in meta; freedom at compile
 
-| In MetaCode | At compile (for a leaf) |
-|-------------|-------------------------|
-| What this **file’s** code is for | Frameworks, idioms inside that file |
-| Behavior and rules this file must honor | Exact algorithms, types, helpers |
-| Public surface this file exposes (if stated) | Private helpers within the file |
-| Checks that apply to this unit | How tests are wired in the host layout |
+| In MetaCode (constraints) | At compile (implied fill) |
+|---------------------------|---------------------------|
+| What this **file** is for and must guarantee | How it is implemented inside the file |
+| Rules / invariants / refusals that matter | Algorithms, helpers, local types |
+| Ownership boundaries (must / must not) | Frameworks and factoring within the file |
+| Checks that prove the constraints | Extra tests compile invents to match |
 
-If meta is silent on implementation inside the file, **compile decides** and reports choices.  
-If meta states a rule, **compile must not drop it.**
+If meta is silent, **compile decides** within the constraints and reports choices.  
+If meta states a constraint, **compile must not violate it.**  
+Do **not** require meta to list every function or step “so the model knows what to write.”
 
 ### 3.2 Format is deferred
 
@@ -116,12 +135,14 @@ If `# Agent` is missing, the agent may **append** it; never alter lines above.
 
 ## 5. What to say (content, not template)
 
-Prefer **positive** description. No required heading list.
+Prefer **constraints and ownership** over inventories. No required heading list.
 
-Useful: what it is, what it does, controls/rules that matter, checks.  
-**“What it is not”** is not a default section.
+Useful: purpose, must-hold rules, boundaries, decisive controls, checks that prove the rules.  
+Avoid: complete API rosters, play-by-play algorithms, “and also handle…” catalogs that follow from a tighter rule.
 
-For **leaves**, also useful: what this code file owns vs what it calls/imports (in plain language).
+**“What it is not”** is not a default section; a rare boundary constraint is fine when it prevents a real mistake.
+
+For **leaves**: what this **one file** must own and guarantee — not every symbol inside it.
 
 ---
 
@@ -157,7 +178,9 @@ compile_leaf(language_definition, leaf_meta [, parent_context])
 **Inputs:** language def; **one leaf** MetaCode file; compile skill; optional short parent collection(s) for context only.  
 **Output:** **exactly one** source file (path recorded in report); plus report (choices, gaps).
 
-**Must not:** emit multiple peer source files from one leaf; invent sibling modules that should be other leaves.
+**Must not:** emit multiple peer source files from one leaf; invent sibling modules that should be other leaves; treat missing helper lists as missing product constraints.
+
+**Must:** satisfy stated constraints; invent only within them; report free choices.
 
 ### 7.2 Collection compile (MVP)
 
@@ -179,7 +202,10 @@ decompile_file(language_definition, one_code_file)
 ```
 
 **Inputs:** language def; **one** declared code file; decompile skill.  
-**Output:** **one** leaf MetaCode file describing that code file’s role and behavior (not a line-by-line paste).
+**Output:** **one** leaf MetaCode file of **constraints and ownership** for that file (not a line tour or full API roster).
+
+**Prefer:** purpose, invariants, boundaries, decisive contracts, checks.  
+**Avoid (in user zone):** complete public-symbol dumps; those may sit under `# Agent` if useful for navigation.
 
 ### 8.2 Building the tree
 
@@ -204,3 +230,4 @@ examples/<name>/
 |---------|--------|
 | 0.1–0.4 | Earlier stubs (budget, zones, non-programmer emphasis) |
 | 0.5 | **MVP firm:** leaf meta file ↔ one code file; collections group only; decompile = one file → one leaf; non-programmer access = inspiration not hard rule |
+| 0.6 | Meta = **constraints** (not full enumeration); compile fills implied decisions; decompile recovers constraints/ownership |

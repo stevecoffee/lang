@@ -83,6 +83,7 @@
 - Cross-module call graph not fully modeled in meta
 - Privilege matrices and refusal tables still live in product SPEC, not duplicated into every leaf
 - Some facades (`backup.py`, `config.py`, `extract.py`) re-export; leaves note facade role
+- **Pass-1 bias:** many leaves list public callables (AST inventory). Language v0.6 prefers **constraints/ownership** in the user zone; symbol lists belong under `# Agent` or should be dropped in a later pass
 
 ## Assumptions
 

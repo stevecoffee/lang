@@ -32,7 +32,9 @@ Create an **intermediate higher-level language** (working name: MetaCode) for hi
 
 > **Meta is source. AI write is compile. Classic code is machine language.**
 
-**MVP firm constraint:** a **leaf** MetaCode file compiles to **exactly one** source code file. **Collection** meta files group children and do not emit code (MVP). Decompile MVP: **one code file → one leaf** meta file.
+**Meta pins constraints; compile fills the rest.** The language’s job is the rules, invariants, and ownership boundaries that must hold — not a complete enumeration of coding decisions and behaviors. If constraints are right, most remaining choices are implied and may be decided at compile (and reported).
+
+**MVP firm constraint:** a **leaf** MetaCode file compiles to **exactly one** source code file. **Collection** meta files group children and do not emit code (MVP). Decompile MVP: **one code file → one leaf** meta file (constraints/ownership, not an API dump).
 
 **Inspiration (not a hard rule):** keep meta approachable for non-programmers at upper nodes. Precision at leaves is fine.
 
@@ -114,13 +116,13 @@ Refine until leaves are file-shaped. Collections (e.g. product root) organize; t
 
 **Working-memory budget:** each meta file stays small. Detail goes to children. Normative: [`docs/language.md`](docs/language.md).
 
-### 2.2 Product in meta; implementation at compile
+### 2.2 Constraints in meta; freedom at compile
 
-**Meta owns specified truth for that node. Compile fills implementation inside the single emit file.**
+**Meta owns constraints for that node. Compile fills implied decisions inside the single emit file.**
 
-Where a leaf pins behavior or surface, honor it. Where silent, choose simply and report. Do not emit extra peer files from one leaf — those need their own leaves.
+Pin purpose, invariants, boundaries, and decisive contracts. Do not require full procedure or symbol catalogs. Where silent, choose simply and report. Do not emit extra peer files from one leaf — those need their own leaves.
 
-User vs `# Agent` zones: agents only edit under `# Agent` ([`docs/language.md`](docs/language.md) §3.3).
+User vs `# Agent` zones: agents only edit under `# Agent` ([`docs/language.md`](docs/language.md) §3.3). Author test: if removing a sentence would not allow a wrong product decision, it may not belong in meta.
 
 ### 2.3 Tests as the same language
 
@@ -357,3 +359,4 @@ Stages are **skill-mediated** until tooling exists. Each arrow is a closed-conte
 | 2026-08-09 | Critique pass: thin `examples/todo/meta.md`; language §2.1 working-memory budget / progressive disclosure; SPEC §2.1 notes concept limit per file. |
 | 2026-08-09 | Non-programmer authors; LLM fills implementation; hierarchy as multi-node tree (sections as stand-in); format deferred; language v0.3. |
 | 2026-08-09 | MVP: leaf meta ↔ one code file; collections group only; decompile per file; non-programmer access = inspiration; language v0.5. |
+| 2026-08-09 | Constraints-first meta (not full enumeration); language v0.6. |
