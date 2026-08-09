@@ -25,28 +25,29 @@ You are executing a **pure greenfield compile** of MetaCode into classic machine
 - Treat existing `machine/` code as a source of new requirements (greenfield emit)  
 - Invent modules, public APIs, routes, commands, or file layout not authorized by MetaCode  
 
-If information is missing, **fail clearly** in the compile report and emit only what is justified — do not pad from world knowledge about “typical todo apps” beyond meta.
+Meta may be written by **non-programmers**. Missing *implementation* detail is normal — **you choose it**. Missing *product* behavior is a gap — **report it**, don’t invent major features.
 
 ## Procedure
 
-1. Read MetaCode as a **small refinement tree** — prefer short root files; do not demand missing ceremony.  
-2. Take **What / Not / Shape / Does / Check** (or equivalent) as authority for product scope.  
-3. Where meta **names** parts or layout, honor them. Where it does not, choose a simple structure and list choices in the report.  
-4. Emit **tests** from Does/Check (same coin), not from a fictional scenario catalog.  
-5. Write outputs to the destination path given by the operator (default: `examples/<name>/machine/`).  
-6. Write `COMPILE_REPORT.md`: choices, gaps, conflicts, questions.
+1. Read MetaCode as a **hierarchy** (sections ≈ child nodes; later separate files). Use the unit you were given, not the whole universe.  
+2. **Product truth** = what the meta says in plain language (what it is, what you can do, controls, user-visible rules).  
+3. **Implementation** (modules, files, frameworks, schemas, algorithms) = your job when meta is silent; keep it simple; list choices in the report.  
+4. Honor explicit user-facing rules and described controls (e.g. keybindings).  
+5. Emit **tests** from stated/implied behavior.  
+6. Write outputs to the path given (default: `examples/<name>/machine/`).  
+7. Write `COMPILE_REPORT.md`: implementation choices, product gaps, conflicts, questions.
 
 ## Output contract
 
 | Output | Required |
 |--------|----------|
 | Machine source tree | Yes |
-| Tests from Does/Check | Yes |
-| `COMPILE_REPORT.md` | Yes |
-| Product scope not in meta | **No** |
+| Tests from meta behavior | Yes |
+| `COMPILE_REPORT.md` (esp. implementation choices) | Yes |
+| Major product features not in meta | **No** |
 
 ## Success criteria
 
-- A human can still read the meta in one screen and recognize the app  
-- Does/Check drive product and tests together  
-- No undeclared inputs; missing product facts → report, don’t invent scope  
+- Non-programmer meta is enough to build something faithful  
+- Implementation was filled without demanding meta become code  
+- No undeclared inputs; product gaps reported, not silently assumed  

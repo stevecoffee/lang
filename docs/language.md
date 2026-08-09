@@ -1,12 +1,10 @@
 # MetaCode — language definition (loadable)
 
-**Status:** stub / Phase 1  
-**Audience:** humans authoring meta; agents on **compile** and **decompile** runs  
-**Not this file:** product phases, Keep process, someday chrome — those live in `SPEC.md` and must **not** be loaded as compile context.
+**Status:** stub / Phase 1 (content first; format later)  
+**Audience:** anyone describing software in plain language; agents on compile/decompile runs  
+**Not this file:** product phases, Keep, chrome — see `SPEC.md` (do **not** load SPEC into a pure compile run).
 
-This document is the **compiler-facing** language definition. A pure compile run’s project-specific input is only this file (or its successor) plus the MetaCode artifact.
-
-Working names: **MetaCode** (language), **MetaCompiler** / compile skill (emit), **MetaBDD** (tests co-specified with code). Better names TBD.
+Working names: **MetaCode**, **MetaCompiler** / compile skill, **MetaBDD**. Better names TBD.
 
 ---
 
@@ -14,143 +12,177 @@ Working names: **MetaCode** (language), **MetaCompiler** / compile skill (emit),
 
 **Meta is source. AI write is compile. Classic code is machine language.**
 
-| Layer | Role |
-|-------|------|
-| MetaCode | Primary authoring surface — hierarchical intent, structure, tests |
-| Compile | Structure-led emit to classic code (+ tests); model fills bodies |
-| Classic code | Executable substrate (TS, Python, …) |
+| Layer | Who it’s for | Role |
+|-------|----------------|------|
+| **MetaCode** | Humans (including **non-programmers**) | What the system is and does — hierarchical, plain language |
+| **Compile** | LLM / later tools | Turn meta into classic code + tests; **fill in implementation** |
+| **Classic code** | Machines and programmers when needed | Runnable result |
+
+Meta is **not** a programming language in disguise. If only engineers can write it, we failed.
 
 ---
 
-## 2. Artifact model
+## 2. Who writes meta / who decides what
 
-- A MetaCode unit is a **node in a refinement tree**, not classic code with comments.
-- Hierarchy is nested headings and/or separate files for children.
-- **Parents** hold what you keep in your head for that unit; **children** hold detail only when someone is working that part.
-- **Condense** upward; **expand** downward. Never paste the whole system into one flat essay.
-- Compile may use one subtree at a time so a run stays small.
+### 2.1 Accessible to non-programmers
 
-### 2.1 Progressive disclosure (working-memory budget)
+Authors describe **intent, behavior, and experience** in ordinary language (and simple structure).
 
-Meta exists to **simplify the mental model**, not to front-load every design decision.
+They should **not** need to specify:
 
-A developer is not holding modules, timestamps, scenario IDs, and infra notes all at once. Meta must match that.
+- modules, packages, file layout  
+- frameworks, types, storage engines  
+- algorithms, unless the *product* cares about a particular approach  
 
-**Soft limits per MetaCode file** (like a line-count budget for code files) — revise numbers if practice demands, but keep *a* budget:
+Those are **implementation details**. The compile step (LLM today) chooses them, records choices in a compile report, and must still honor anything the meta *did* state.
+
+### 2.2 What belongs in meta vs compile
+
+| In MetaCode (author) | At compile (LLM / tool) |
+|----------------------|-------------------------|
+| What the thing is | How files and modules are cut |
+| What someone can do | Frameworks, libraries, idioms |
+| What they see / press / say | Exact data schema (unless author stated it) |
+| Rules that matter to the user (“empty title doesn’t stick”) | Algorithms and internal APIs |
+| Durable facts (“still there after restart”) | Host language details (unless author fixed them) |
+
+If meta is silent on an implementation choice, **compile decides** — do not force the author to invent programmer structure to get a build.
+
+If meta states a product rule, **compile must not “improve” it away**.
+
+### 2.3 Format is deferred
+
+Nail **content and hierarchy** first. Do **not** block on markdown style, required headings, or formal grammar.
+
+Plain notes, lists, keybindings, short prose — all fine while we learn what matters. Formalize spelling/shape later.
+
+---
+
+## 3. Hierarchy (core, not optional)
+
+**Vision:** MetaCode is a **tree of units**, not one giant file that describes everything.
+
+| Level | Holds |
+|-------|--------|
+| **Root** | Whole product in one breath — name, kind, main experience |
+| **Children** | One concern each (e.g. list navigation, editing, saving) when that concern needs room |
+| **Deeper** | Only when working that slice |
+
+Same spirit as small code files: **one mental page per node**. Detail goes **down** into children, not into a longer root essay.
+
+### 3.1 For now (before multi-file)
+
+We may keep a single file and use **sections as stand-ins for child nodes**.
+
+Treat a clear section as a future file/node. When content outgrows working memory, **split** (section → file) rather than keep growing one blob.
+
+Do **not** treat “one `meta.md` for the whole app forever” as the design.
+
+### 3.2 Working-memory budget (per node)
+
+Per **node** (file later; section or file now):
 
 | Budget | Guideline |
 |--------|-----------|
-| Length | About **one screen** when skimming (~40–60 lines); flag if much longer |
-| Top-level sections | At most **~7** |
-| Bullets per section | At most **~7** |
-| Concepts on the page | Only what you need to **explain or change this unit today** |
+| Length | About one screen when skimming |
+| Ideas on the page | Only what you need for **this** unit right now |
 
-**Detail goes down, not sideways.** Module lists, field catalogs, keybindings, scenario matrices → child nodes or later expansion when that layer is in focus — not the root file “just in case.”
+If it doesn’t fit, it’s a signal to **add a child**, not to write denser jargon.
 
-**Root of an app** should read like a sharp product pitch + shape + does/check — not a design doc dump.
+### 3.3 Compile and hierarchy
 
-### 2.2 What a unit usually answers (not a forced outline)
-
-Cover these **as briefly as truth allows**. Do **not** open a long section for each if one line will do.
-
-| Concern | In plain terms |
-|---------|----------------|
-| What is it? | One or two sentences |
-| Not this | Out of scope (short) |
-| Shape | Main parts, data you care about, where it lives |
-| Does | Behaviors (and checks live here or as “same as does”) |
-| Stack / deps | Only if needed to build or run |
-
-Architecture diagrams, module tables, and infra appear **when the unit is about that**, or as children of Shape — not as mandatory ceremony.
+Compile may run on **one subtree** (one node + what it needs from parents). Parent gives context; child owns local detail. Avoid loading an entire monorepo-sized meta into one run when a branch will do.
 
 ---
 
-## 3. Hard rules
+## 4. What to say (content, not template)
 
-### 3.1 Structure owns skeleton; model fills flesh
+No required section list. Prefer **positive** description.
 
-- Where meta **names** parts, layout, or public surface, compile must honor them.
-- Where meta stays silent, compile may choose reasonable structure and must record choices in the compile report — **do not** force authors to pre-list every module to get a first build.
-- Prefer meta that states **intent and shape** over meta that micro-specifies files.
+Useful kinds of content (use only what helps):
 
-### 3.2 Code and tests are one coin
+- **What it is** — short  
+- **What you can do** — behaviors  
+- **How it feels / controls** — e.g. keybindings, layout in user terms (“full-screen list”)  
+- **Rules that matter** — user-visible constraints  
+- **Checks** — often “the does-list works,” including after restart if that matters  
 
-- Prefer **Does** + **Check** (or “check = does, including after restart”) over a parallel test novel and scenario ID catalogs.
-- Extra fixed cases only when they are not obvious from Does.
+**“What it is not”** is **not** a default section. Long exclusion lists are usually an anti-pattern. Prefer a clear positive description. A rare, local “not X” is fine when the positive wording would otherwise mislead.
 
-### 3.3 No redundancy
-
-- Each fact **once**. Refine in children; do not restate in siblings.
-
-### 3.4 Embed, don’t doc-drift
-
-- Machine code carries intent via naming/structure; not a second hand-maintained doc tree.
-
-### 3.5 Simple as possible
-
-- Prefer plain language a human will actually edit.
-- Prefer hierarchical Markdown until formal grammar is justified.
-- Closed-context skills before custom parser/codegen.
-
-### 3.6 Prefer obvious over cryptic
-
-- No fake precision (S1…S12, internal codenames) unless it helps a human.
-- Short words beat framework jargon when both mean the same thing.
+Avoid: scenario ID catalogs, module maps, and programmer scaffolding unless a **programmer author** deliberately wants them in a **child** node about implementation.
 
 ---
 
-## 4. Compile semantics
+## 5. Other hard rules
+
+### 5.1 No redundancy
+
+Say each fact once. Refine in children; don’t copy the same rule everywhere.
+
+### 5.2 Behavior and checks together
+
+What it does and how we know it works stay close (same coin). No parallel “test novel” required. Obvious checks can be implied (“still works after restart”).
+
+### 5.3 Embed, don’t doc-drift
+
+When code exists, prefer names/structure that reflect meta over a second hand-maintained doc tree.
+
+### 5.4 Prefer plain over cryptic
+
+Words a non-programmer would use. No fake precision.
+
+---
+
+## 6. Compile
 
 ```text
-compile(language_definition, metacode) → machine_code + tests + compile_report
+compile(language_definition, metacode_unit) → machine_code + tests + compile_report
 ```
 
-**Allowed inputs:** this language definition; the MetaCode unit; the compile skill text.  
-**Forbidden (greenfield):** ambient chat; unrelated repo files; full product SPEC; existing machine code.
+**Inputs only:** this language definition; the MetaCode unit (node/subtree); the compile skill.  
+**Not inputs:** full SPEC, ambient chat, undeclared repo files, “also remember…”
 
 **Compile must:**
 
-1. Honor names/layout/surface **when meta states them**; otherwise choose simply and report choices.  
-2. Emit classic code + tests aligned with **Does/Check** (not a missing scenario encyclopedia).  
-3. Prefer asking via compile report over inventing product scope.  
-4. Produce a short **compile report**: choices, gaps, conflicts, questions.
+1. Treat meta as **product truth**; fill **implementation** where meta is silent.  
+2. Honor explicit user-facing rules and described controls.  
+3. Emit tests from stated/implied behavior.  
+4. Report implementation choices, gaps, and questions — especially decisions a non-programmer never wrote down.
 
-**Brownfield** (meta + existing machine + drift rules) is a **separate mode** — not default greenfield compile.
+**Brownfield** (meta + existing code + reconcile) is a separate mode later.
 
 ---
 
-## 5. Decompile semantics
+## 7. Decompile
 
 ```text
-decompile(language_definition, declared_sources) → metacode [+ unknowns]
+decompile(language_definition, declared_sources) → metacode_tree [+ unknowns]
 ```
 
-**Allowed inputs:** this language definition; **only** sources the run declares (e.g. listed paths of code/tests/docs); the decompile skill text.  
-**Forbidden:** undeclared paths; golden meta on blind lifts; chat goals not in sources.
+**Inputs only:** language definition; declared sources; decompile skill.
 
 **Decompile must:**
 
-1. Emit MetaCode in the shape this definition describes (hierarchy + essential components).  
-2. Capture enough for a later compile toward **behavioral** clone — not a code paste or prose dump.  
-3. Prefer structure and contracts over line-level narration.  
-4. Record unknowns / low confidence when the language allows (do not invent certainty).
+1. Produce **hierarchical** meta (root + children as needed), plain language first.  
+2. Capture user-facing behavior and shape — not a code tour.  
+3. Stay within working-memory budget per node; split instead of one giant file.  
+4. Leave implementation detail out of meta unless it is truly product-level.  
+5. Mark unknowns rather than inventing product facts.
 
 ---
 
-## 6. Output conventions (stub)
+## 8. Repo layout (examples)
 
-- Example projects live under `examples/<name>/`.  
-- MetaCode default path: `examples/<name>/meta.md` (or `meta/` tree later).  
-- Emitted machine code default path: `examples/<name>/machine/`.  
-- Host language for a given example is declared in that example’s meta (or README); one host per early example.
-
-*Refine naming/embed conventions here as the first example teaches them.*
+- Examples: `examples/<name>/`  
+- Meta today: `examples/<name>/meta.md` (sections ≈ future nodes; multi-file tree later)  
+- Emit: `examples/<name>/machine/`  
 
 ---
 
-## 7. Document control
+## 9. Document control
 
 | Version | Notes |
 |---------|--------|
-| 0.1-stub | Initial loadable def split from SPEC |
-| 0.2 | Working-memory budget / progressive disclosure; thinner root meta; less forced ceremony |
+| 0.1 | Initial stub |
+| 0.2 | Working-memory budget |
+| 0.3 | Non-programmer audience; LLM owns implementation detail; hierarchy as multi-node tree (sections as stand-in); format deferred; “not this” not default |

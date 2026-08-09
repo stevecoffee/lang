@@ -104,21 +104,23 @@ Define the language for **humans and LLMs**. Formal grammar and automated script
 
 Progressive hierarchical description, condensation, and analysis is the right unit. Compile is **tree expansion** (and eventually emit to machine code), not free-form string generation.
 
-Programmers already think in layers: system → package → module → function. Today’s tools force authoring at the bottom and hope the top stays true.
+**Not one giant file.** The system is a **tree of meta nodes**. Root = whole product in one breath; children = one concern each. Same idea as small source files. Until multi-file meta is worth the friction, **sections in one file stand in for child nodes** — then split when a section outgrows working memory.
 
-A meta “file” is not classic code with comments; it is a **node in a refinement tree**. Child nodes refine parents; condensation rolls detail upward without losing requirements.
+A meta node is not classic code with comments; it is a unit of human understanding. Child nodes refine parents; condensation rolls detail upward without losing requirements.
 
-**Working-memory budget:** each MetaCode file stays small (on the order of one screen / few sections) — same spirit as a line-count limit on a code file. Detail that does not fit goes to **child** nodes, not a longer essay. Root meta should match what a developer holds in mind for that unit, not a full design dump. Normative guidelines live in [`docs/language.md`](docs/language.md) §2.1.
+**Working-memory budget:** each node stays small (about one screen). Detail goes **down**, not into a longer essay. Normative detail: [`docs/language.md`](docs/language.md).
 
-Large systems compile **by subtree** when needed so each run’s MetaCode input stays within context limits; parent nodes contribute interface/contract, not the whole monorepo dump.
+Compile **by subtree** when needed; parents give context, not the entire tree dumped into every run.
 
-### 2.2 Deterministic skeleton, non-deterministic flesh
+### 2.2 Product in meta; implementation at compile
 
-**Structure owns names and layout; the model fills bodies.**
+**Meta owns product truth. Compile owns implementation fill.**
 
-The compile skill (later: MetaCompiler software) manages file / object / function naming and graph layout per the language definition; AI writes “machine code” under that structure. Greenfield and brownfield operational states are both required eventually (separate modes).
+Authors (including non-programmers) state what it is, what you can do, and rules that matter to users. They do **not** have to specify modules, frameworks, or file trees.
 
-Most AI coding fails operationally because structure is free-form: renames, file placement, and public APIs thrash between runs. If the compile process owns the graph and names, the model is a **backend for emit**. Closed context makes thrash attributable to language/skill gaps, not hidden files.
+Where meta **does** pin a user-facing structure or rule, compile honors it. Where meta is silent on engineering structure, the LLM chooses simply and reports choices. Greenfield and brownfield modes both required eventually (separate).
+
+Closed context makes bad inventing of *product* scope visible; inventing *implementation* under clear product meta is expected.
 
 ### 2.3 Tests as the same language
 
@@ -353,3 +355,4 @@ Stages are **skill-mediated** until tooling exists. Each arrow is a closed-conte
 | 2026-08-09 | Closed-context compile/decompile via skills/prompts (§1.1–1.2); Phase 1–3 artifacts are language def, MetaCode, and skills—not ambient agents or required scripted toolchains; D9–D10 opened. |
 | 2026-08-09 | Scaffold: `docs/language.md`, playbooks, `skills/metacompile|metadecompile`, `examples/todo` (full-screen todo editor meta); D10 closed; D9 in-repo skills. |
 | 2026-08-09 | Critique pass: thin `examples/todo/meta.md`; language §2.1 working-memory budget / progressive disclosure; SPEC §2.1 notes concept limit per file. |
+| 2026-08-09 | Non-programmer authors; LLM fills implementation; hierarchy as multi-node tree (sections as stand-in); format deferred; language v0.3. |

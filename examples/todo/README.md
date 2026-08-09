@@ -4,7 +4,9 @@ First Phase 1 example system for MetaCode.
 
 ## Intent
 
-A **full-screen todo editor**: the application is the editor surface (not a sparse CLI). User manages a list of todos with create, edit, complete/uncomplete, and delete — keyboard- and focus-friendly, single primary view.
+Full-screen **text** todo app: list of items, keyboard-driven. Meta is plain-language product truth (fine for non-programmers). Implementation is chosen at compile time.
+
+**Hierarchy:** `meta.md` may use **sections as stand-ins** for child nodes; multi-file meta comes later. Format is informal until content settles.
 
 ## Paths
 
