@@ -26,21 +26,25 @@ Living product contract. This file owns **thesis, principles, phase scope, and h
 
 ## 1. Purpose
 
-Create an **intermediate higher-level coding language** (working name: MetaCode) that matches the **conceptual space programmers already operate in**: progressive hierarchical description, condensation, and analysis of software — not line-oriented source as the primary artifact.
+Create an **intermediate higher-level language** (working name: MetaCode) for describing software as people actually think about it: progressive **hierarchical** description, condensation, and analysis — not line-oriented source as the primary artifact.
+
+**Accessible to non-programmers.** Meta states product intent, behavior, and experience in plain language. **Implementation detail** (modules, frameworks, file layout, algorithms) is chosen at **compile** time by the LLM (later: tools), not required in meta.
 
 **Thesis (keep this if you keep only one idea)**
 
 > **Meta is source. AI write is compile. Classic code is machine language.**
 
-That is not another prompt framework. It is a claim about **who owns structure** (the language / compile process) versus **who fills bodies** (the model), and about what programmers should author day to day.
+That is not another prompt framework. It is a claim about **who owns product truth** (meta) versus **who fills implementation** (compile / model).
 
 | Layer | Role |
 |---|---|
-| **Meta language** (MetaCode or successor) | Primary authoring and design surface |
-| **AI-assisted generation** | The *compile* step (MetaCompiler or successor) |
+| **Meta language** (MetaCode or successor) | Primary authoring surface — hierarchical, plain language |
+| **AI-assisted generation** | The *compile* step — implementation + classic code (+ tests) |
 | **Classic code** (TS, Python, …) | The new *machine language* — executable substrate |
 
-Compiling a meta unit may mean **decomposing** it into finer meta units, then into conventional code. Drift, conflicts, misalignment, and redundancy across layers must be managed deliberately.
+**Hierarchy is real:** many nodes (eventually many files), not one giant meta blob. Early on, **sections may stand in for child nodes**. **Format later** — content and hierarchy first.
+
+Compiling a unit may mean refining into child meta, then into conventional code. Drift and redundancy are managed deliberately.
 
 ### 1.1 How compile and decompile are implemented (normative for now)
 
@@ -94,7 +98,7 @@ decompile(language_definition, declared_sources) → metacode [+ unknowns/confid
 
 ### 1.3 Near-term posture
 
-Define the language for **humans and LLMs**. Formal grammar and automated scripted tooling wait until essentials are locked and exemplified. Compile/decompile remain real operations implemented as **closed-context skills/prompts** first.
+Define the language for **humans (including non-programmers) and LLMs**. Formal grammar/formatting and automated scripted tooling wait until content and hierarchy are solid. Compile/decompile are closed-context skills/prompts first; compile is expected to supply implementation detail.
 
 ---
 
