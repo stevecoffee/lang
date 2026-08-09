@@ -242,12 +242,20 @@ After per-file leaves exist, add **collection** parents to group them (by folder
 
 ## 9. Repo layout (examples)
 
+When a tree has multiple collections, prefer:
+
 ```text
 examples/<name>/
-  L0.*.md          # often a collection (product root)
-  …                # further collection / leaf meta files
-  machine/         # emitted code files (one per compiled leaf)
+  meta.md              # product root collection (optional name)
+  <collection>/        # collection = directory of children
+    meta.md            # that collection’s constraints / child list
+    <leaf>.md          # leaf named after module stem (e.g. items.md ↔ items.py)
+  machine/             # emitted code (one file per compiled leaf)
 ```
+
+- **No layout prefixes** in names (`C.`, `L0.`, `leaves/` bags).  
+- Collection ↔ directory; leaf ↔ one file inside (or nested) that directory.  
+- Need not mirror the original source tree.
 
 ---
 

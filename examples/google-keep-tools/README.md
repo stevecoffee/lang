@@ -1,21 +1,25 @@
-# Example: google-keep-tools (decompile exercise)
+# Example: google-keep-tools (decompile)
 
-Best-effort MetaCode lift of `/Users/stevecoffee/projects/google-keep-tools` production Python modules.
+Best-effort MetaCode lift of production modules from google-keep-tools.
 
-## MVP mapping
+## Layout rule
 
-| Kind | Path |
-|------|------|
-| Product collection | [L0.google-keep-tools.md](L0.google-keep-tools.md) |
-| Concern collections | `C.*.md` |
-| Leaves (1 meta ↔ 1 code file) | [leaves/](leaves/) |
-| Report | [DECOMPILE_REPORT.md](DECOMPILE_REPORT.md) |
+- A **collection** is a **directory** whose children are meta files (or nested collections).
+- A **leaf** is a meta file that maps to **one** code file (`Code file:` in the leaf).
+- Names have **no** `C.` / `L0.` / `leaves/` prefixes; leaf files are named after the module stem (`items.md` ↔ `items.py`).
+- Collection overview lives in that directory’s `meta.md`.
+- Product root: [meta.md](meta.md) plus collection directories beside it.
 
-## Counts
+## Collections
 
-- Production leaves: 50
-- Collections: 9 + L0
+- [backup/](backup/)
+- [cli/](cli/)
+- [config-paths/](config-paths/)
+- [extract-plan/](extract-plan/)
+- [keep-core/](keep-core/)
+- [list-meta/](list-meta/)
+- [review-ui/](review-ui/)
+- [sandbox/](sandbox/)
+- [scope-llm/](scope-llm/)
 
-## How to re-run a single-file decompile
-
-Closed context: `docs/language.md` + one source `.py` + `skills/metadecompile/SKILL.md` → one leaf under `leaves/`.
+See [DECOMPILE_REPORT.md](DECOMPILE_REPORT.md).
