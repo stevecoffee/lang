@@ -1,37 +1,21 @@
 # Example: Todo
 
-Full-screen text todo list. Meta is a **layer ladder** L0→L3; code is L4 under `machine/`.
+Full-screen text todo list.
 
-## Layers
+| File | Role |
+|------|------|
+| [meta.md](meta.md) | **L0** product — user spec + `# Agent` assumptions/questions |
+| [L1.md](L1.md) | **L1** behavior — next hierarchy level |
+| [machine/](machine/) | L4 emit target (after compile) |
 
-| File | Layer |
-|------|--------|
-| [L0.md](L0.md) | Product |
-| [L1.md](L1.md) | Behavior |
-| [L2.md](L2.md) | Architecture |
-| [L3.md](L3.md) | Detailed design |
-| [meta.md](meta.md) | Index |
-| [machine/](machine/) | L4 emit (after compile) |
+## User vs Agent
 
-Plain language at the top; more design detail as you go down. Non-programmers can stay on L0–L1. Implementer agents use L3 (with parents) under closed context.
+- **User** text (above `# Agent`): human only — do not let agents rewrite it  
+- **`# Agent`**: agents may add assumptions, open questions, generated notes  
 
-## Compile (closed context)
+Rule is in `docs/language.md` §2.4.
 
-See [`docs/playbooks/compile.md`](../../docs/playbooks/compile.md).
+## Compile (later)
 
-**Implementer-style run** — agent sees only:
-
-1. `docs/language.md`  
-2. `examples/todo/L0.md` … `L3.md` (or L3 + short parents)  
-3. `skills/metacompile/SKILL.md`  
-
-Emit into `examples/todo/machine/`.
-
-Stack/toolkit still chosen at compile if not pinned in L2/L3; record choices in `COMPILE_REPORT.md`.
-
-## Status
-
-- [x] L0–L3 drafted from root sketch  
-- [ ] Human pass on content  
-- [ ] First closed-context compile (L3 → machine)  
-- [ ] Tests green  
+Closed context: language def + meta nodes + compile skill → `machine/`.  
+Prefer L1+ (and deeper when present) for implementer-style runs.

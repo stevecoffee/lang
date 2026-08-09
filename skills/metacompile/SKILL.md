@@ -27,6 +27,8 @@ You are executing a **pure greenfield compile** of MetaCode into classic machine
 
 Meta may be written by **non-programmers**. Missing *implementation* detail is normal — **you choose it**. Missing *product* behavior is a gap — **report it**, don’t invent major features.
 
+**User vs Agent zones:** If a meta file has `# Agent`, never edit text above it. Only write under `# Agent` (assumptions, open questions, notes). User lines are specifications.
+
 ## Procedure
 
 1. Read MetaCode as a **hierarchy** (sections ≈ child nodes; later separate files). Use the unit you were given, not the whole universe.  

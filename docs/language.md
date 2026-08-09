@@ -56,6 +56,23 @@ Nail **content and hierarchy** first. Do **not** block on markdown style, requir
 
 Plain notes, lists, keybindings, short prose — all fine while we learn what matters. Formalize spelling/shape later.
 
+### 2.4 User text vs Agent section (hard rule)
+
+Each meta node may have two zones:
+
+| Zone | Who writes | Holds |
+|------|------------|--------|
+| **User** (everything above `# Agent`, or the whole file if no Agent heading) | Human author | Specifications — product truth |
+| **`# Agent`** (heading and below) | Agents only | Assumptions, open questions, generated refinement notes |
+
+**Agents must not modify user text.** Only add or edit under `# Agent`.
+
+If the file has no `# Agent` heading yet, the agent may **append** one at the end; it still must not alter lines above it.
+
+Human authors may edit either zone; they own the user zone completely.
+
+This preserves the distinction between **what the user specified** and **what the agent assumed or generated**.
+
 ---
 
 ## 3. Hierarchy (core, not optional)
@@ -186,3 +203,4 @@ decompile(language_definition, declared_sources) → metacode_tree [+ unknowns]
 | 0.1 | Initial stub |
 | 0.2 | Working-memory budget |
 | 0.3 | Non-programmer audience; LLM owns implementation detail; hierarchy as multi-node tree (sections as stand-in); format deferred; “not this” not default |
+| 0.4 | User vs `# Agent` zones; agents only edit Agent section |
