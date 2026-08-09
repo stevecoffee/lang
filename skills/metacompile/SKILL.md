@@ -30,16 +30,18 @@ Collection meta files do **not** emit code; they only provide context / grouping
 - Emit **multiple** peer source files from one leaf  
 - Invent other modules that should be separate leaves (put that in the report as “needs its own leaf”)  
 
-Missing *implementation inside this file* → you choose, report it.  
-Missing *behavior this file must implement* → report gap; do not invent major product scope.
+Meta states **constraints**, not a full coding script.  
+Missing *implementation inside this file* → choose within constraints, report it.  
+Missing *constraints this file must honor* → report gap; do not invent major product scope.  
+Do not require a complete function roster in meta.
 
 ## Procedure
 
 1. Confirm the target meta is a **leaf** (file-shaped unit). If it is still a whole-app blob, refuse emit and report: split into leaves first.  
-2. Honor user-zone specifications; use `# Agent` only as non-authoritative notes/assumptions.  
-3. Emit **exactly one** code file to the path given (default under `examples/<name>/machine/`).  
-4. Emit tests only as needed for this file’s behavior (host layout may add a test file — if so, note it; prefer not growing a second *feature* module).  
-5. Write `COMPILE_REPORT.md` (or a short report next to the emit): output path, choices, gaps, “should be other leaves.”
+2. Honor user-zone **constraints**; use `# Agent` only as non-authoritative notes.  
+3. Fill all free decisions so the constraints hold; emit **exactly one** code file.  
+4. Emit tests that prove the constraints (not a second novel).  
+5. Write compile report: output path, free choices, gaps, “should be other leaves.”
 
 ## Output contract
 
