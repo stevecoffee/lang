@@ -8,6 +8,14 @@ Collection: `src/cli/`
 
 CLI surface for ``gkt item`` — parsers and handlers.
 
+## Scope
+
+**In scope** (belongs here):
+- gkt item … parsers/handlers
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Item mutation algorithms (items)
+
 ## Does
 
 Public callables (names observed at decompile):

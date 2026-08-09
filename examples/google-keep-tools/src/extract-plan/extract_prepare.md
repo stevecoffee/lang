@@ -8,6 +8,15 @@ Collection: `src/extract-plan/`
 
 Extract prepare layer: resolve source/dest, analyze CLI args, missing-params form.
 
+## Scope
+
+**In scope** (belongs here):
+- Resolve source/dest, analyze extract params, missing-param handling
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- LLM scoring (scope-llm)
+- Plan apply (extract_apply/plans)
+
 ## Does
 
 Public callables (names observed at decompile):

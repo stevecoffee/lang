@@ -8,6 +8,15 @@ Collection: `src/config-paths/`
 
 Config load, Settings, TOML search, overrides, and value-resolution helpers.
 
+## Scope
+
+**In scope** (belongs here):
+- TOML search/load, Settings object, overrides, typed resolve helpers
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Secret file bytes (config_paths)
+- LLM URL/key getters (config_llm)
+
 ## Does
 
 Public callables (names observed at decompile):

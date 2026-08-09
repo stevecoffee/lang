@@ -8,6 +8,15 @@ Collection: `src/sandbox/`
 
 Bulk check-off of the primary hard-delete sandbox. See SPEC.md §3.
 
+## Scope
+
+**In scope** (belongs here):
+- Bulk check-off of primary sandbox list
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Hard-delete purge (purge_sandbox)
+- Non-sandbox lists
+
 ## Does
 
 Public callables (names observed at decompile):

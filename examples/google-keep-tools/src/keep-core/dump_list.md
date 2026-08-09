@@ -8,6 +8,15 @@ Collection: `src/keep-core/`
 
 Dump one Keep list: items, checked state, order, nesting.
 
+## Scope
+
+**In scope** (belongs here):
+- Read dump of one list: order, nest, checked/live views
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Mutations
+- Backup package format
+
 ## Does
 
 Public callables (names observed at decompile):

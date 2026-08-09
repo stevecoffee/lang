@@ -8,6 +8,15 @@ Collection: `src/config-paths/`
 
 Path/security helpers for config: secret files, write constrain, atomic write.
 
+## Scope
+
+**In scope** (belongs here):
+- Secret path allowlists, constrain_write_path, safe_write_text
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Settings schema
+- Backup package writers (backup_io) except shared confinement ideas
+
 ## Does
 
 Public callables (names observed at decompile):

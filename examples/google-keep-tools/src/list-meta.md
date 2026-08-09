@@ -6,6 +6,18 @@ Kind: collection (file `src/list-meta.md` + directory `src/list-meta/` — does 
 
 google-keep-tools modules for **list-meta**.
 
+## Scope
+
+**In scope** (belongs here):
+- GKT list metadata: list-scope, repo stamp, style/role stamps, snapshots of meta, reorg-rules list content
+- Parse/write of meta lines under the bottom GKT parent
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Item body text edits unrelated to meta (items/*)
+- Backup packages
+- CLI only (cli/list_cli may call here but does not own meta semantics)
+- LLM scoring of item relevance (scope-llm/*)
+
 ## Children
 
 - [list_meta](list-meta/list_meta.md) ← `list_meta.py`

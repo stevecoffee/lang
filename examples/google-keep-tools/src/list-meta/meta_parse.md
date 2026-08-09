@@ -8,6 +8,15 @@ Collection: `src/list-meta/`
 
 Bottom meta group parsers, guards, and metadata dump (SPEC §4).
 
+## Scope
+
+**In scope** (belongs here):
+- Parse GKT meta lines/structure from a list
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Mutating Keep to write meta (meta_write)
+- Scoring items
+
 ## Does
 
 Public callables (names observed at decompile):

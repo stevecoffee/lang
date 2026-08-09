@@ -8,6 +8,15 @@ Collection: `src/extract-plan/`
 
 Score (B) → optional TTY review → apply create_list + moves.
 
+## Scope
+
+**In scope** (belongs here):
+- Extract facade: score→review→apply product path entry
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- prepare/score/apply implementations (siblings)
+- CLI
+
 ## Does
 
 - Facade / re-exports or constants only (few or no public functions at module top level).

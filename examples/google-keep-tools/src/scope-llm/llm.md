@@ -8,6 +8,15 @@ Collection: `src/scope-llm/`
 
 Shared LLM client stack (HTTP, keys, parse helpers).
 
+## Scope
+
+**In scope** (belongs here):
+- HTTP client to LLM endpoints, request/response helpers for GKT
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Scope scoring policy (scope_score*)
+- Config key resolution (config_llm) except using it
+
 ## Does
 
 Public callables (names observed at decompile):

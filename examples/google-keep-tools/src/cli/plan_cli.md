@@ -8,6 +8,14 @@ Collection: `src/cli/`
 
 CLI surface for ``gkt plan`` — parsers and handlers.
 
+## Scope
+
+**In scope** (belongs here):
+- gkt plan … parsers/handlers
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Plan file model and apply engine (plans)
+
 ## Does
 
 Public callables (names observed at decompile):

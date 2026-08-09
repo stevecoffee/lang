@@ -8,6 +8,16 @@ Collection: `src/keep-core/`
 
 Labels for google-keep-tools. See SPEC.md §3–§4 (GKT labels).
 
+## Scope
+
+**In scope** (belongs here):
+- GKT role labels attach/ensure, privilege gates for writes
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Item text edits
+- Backup
+- LLM
+
 ## Does
 
 Public callables (names observed at decompile):

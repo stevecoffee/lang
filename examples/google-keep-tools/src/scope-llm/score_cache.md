@@ -8,6 +8,15 @@ Collection: `src/scope-llm/`
 
 Score-cache filesystem, path safety, and load/save.
 
+## Scope
+
+**In scope** (belongs here):
+- Persistent cache of scope scores
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Scoring prompts
+- Keep
+
 ## Does
 
 Public callables (names observed at decompile):

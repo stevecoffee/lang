@@ -8,6 +8,16 @@ Collection: `src/backup/`
 
 Backup package format: read/write gkt-backup-v2, inventory, select (SPEC §6).
 
+## Scope
+
+**In scope** (belongs here):
+- gkt-backup-v2 package shape, contained notes, inventory, select, package build/validate
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Atomic disk install (backup_io)
+- Restore plan object generation (backup_restore)
+- Live Keep writes
+
 ## Does
 
 Public callables (names observed at decompile):

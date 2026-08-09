@@ -8,6 +8,15 @@ Collection: `src/cli/`
 
 Verify Google Keep authentication. CLI: ``gkt auth``.
 
+## Scope
+
+**In scope** (belongs here):
+- gkt auth handler: verify session
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Credential exchange (get_token)
+- Keep.login implementation (keep_auth)
+
 ## Does
 
 Public callables (names observed at decompile):

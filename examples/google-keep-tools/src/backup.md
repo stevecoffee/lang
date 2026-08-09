@@ -6,6 +6,18 @@ Kind: collection (file `src/backup.md` + directory `src/backup/` — does not co
 
 google-keep-tools modules for **backup**.
 
+## Scope
+
+**In scope** (belongs here):
+- Snapshot/package capture of Keep lists, inventory, restore-plan generation
+- Backup path safety and private file write rules used only for backups
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Live Keep mutations other than read-for-backup (no item edit/xmove here)
+- Applying restore plans (plan apply lives in extract-plan/plans)
+- CLI argv parsing for backup (cli/backup_cli)
+- General config/LLM/scope scoring
+
 ## Children
 
 - [backup](backup/backup.md) ← `backup.py`

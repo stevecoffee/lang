@@ -8,6 +8,15 @@ Collection: `src/keep-core/`
 
 Shared login helper for google-keep-tools. See SPEC.md (Auth); IMPLEMENTATION.md.
 
+## Scope
+
+**In scope** (belongs here):
+- Credential load, keep-state cache, Keep.authenticate/resume login
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- OAuth→master token browser exchange (get_token)
+- CLI
+
 ## Does
 
 Public callables (names observed at decompile):

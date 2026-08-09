@@ -6,6 +6,18 @@ Kind: collection (file `src/extract-plan.md` + directory `src/extract-plan/` —
 
 google-keep-tools modules for **extract-plan**.
 
+## Scope
+
+**In scope** (belongs here):
+- Reorg extract pipeline: prepare, score selection, apply create_list+moves
+- Plan JSONL model, dry-run/apply orchestration, propose helpers
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Low-level item/list primitives (keep-core) except as callees
+- Backup snapshot format (backup/*)
+- Interactive review UI widgets (review-ui/*) except as optional callers
+- gkt plan CLI argv (cli/plan_cli)
+
 ## Children
 
 - [extract](extract-plan/extract.md) ← `extract.py`

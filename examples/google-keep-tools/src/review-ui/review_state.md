@@ -8,6 +8,15 @@ Collection: `src/review-ui/`
 
 Pure progressive review state machine (no curses).
 
+## Scope
+
+**In scope** (belongs here):
+- Session state for interactive review flows
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Rendering only (review_ui)
+- Library apply
+
 ## Does
 
 Public callables (names observed at decompile):

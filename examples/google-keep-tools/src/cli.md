@@ -6,6 +6,18 @@ Kind: collection (file `src/cli.md` + directory `src/cli/` — does not compile 
 
 google-keep-tools modules for **cli**.
 
+## Scope
+
+**In scope** (belongs here):
+- User-facing gkt CLI: argparse, dispatch, stdout/stderr presentation
+- Thin handlers that call library modules
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Keep graph mutations and privilege logic (keep-core, list-meta, …)
+- Backup format/restore algorithms (backup/* library)
+- LLM/scope scoring implementation (scope-llm/*)
+- Config load internals beyond CLI flags
+
 ## Children
 
 - [gkt](cli/gkt.md) ← `gkt.py`

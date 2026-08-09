@@ -8,6 +8,15 @@ Collection: `src/list-meta/`
 
 List metadata, list-scope, repo tag, create, snapshot. See SPEC.md §4; IMPLEMENTATION.md.
 
+## Scope
+
+**In scope** (belongs here):
+- Orchestration of list meta read/show for scope/repo/style surfaces
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Low-level parse/write (meta_parse/meta_write)
+- Item bodies
+
 ## Does
 
 - Facade / re-exports or constants only (few or no public functions at module top level).

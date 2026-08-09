@@ -8,6 +8,16 @@ Collection: `src/keep-core/`
 
 Fixture inventory + list resolution helpers for google-keep-tools.
 
+## Scope
+
+**In scope** (belongs here):
+- List identity (id/title REF), resolve, create list, list-level ops and address rules
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Item reorder/check/xmove bodies (items)
+- CLI
+- Backup packages
+
 ## Does
 
 Public callables (names observed at decompile):

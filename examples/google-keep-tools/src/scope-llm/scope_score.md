@@ -8,6 +8,16 @@ Collection: `src/scope-llm/`
 
 Per-group scope scoring (approach B): one digit 0–9 per Keep group.
 
+## Scope
+
+**In scope** (belongs here):
+- Scope-score facade for labeling items vs list-scope
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- LLM transport (llm)
+- Cache (score_cache)
+- Extract apply
+
 ## Does
 
 - Facade / re-exports or constants only (few or no public functions at module top level).

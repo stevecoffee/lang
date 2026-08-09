@@ -8,6 +8,15 @@ Collection: `src/scope-llm/`
 
 Local Ollama evaluation helpers for GKT propose → plans dry-run.
 
+## Scope
+
+**In scope** (belongs here):
+- Local model evaluation harness for scope/LLM experiments
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Production extract path
+- Keep mutations
+
 ## Does
 
 Public callables (names observed at decompile):

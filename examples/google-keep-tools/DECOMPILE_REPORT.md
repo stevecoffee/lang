@@ -77,8 +77,13 @@ Grouping by concern, not original paths.
 | `clear_sandbox.py` | `src/sandbox/clear_sandbox.md` |
 | `purge_sandbox.py` | `src/sandbox/purge_sandbox.md` |
 
+## Scope sections
+
+Every collection and leaf includes **In scope** / **Out of scope** so a reader can decide whether a given module (or function) belongs in that node. Test: if ownership of a symbol is unclear, the scope text is too weak.
+
 ## Quality limits
 
-- Constraint-first language preferred; pass-1 leaves may still list public symbols.
+- Constraint-first language preferred; pass-1 leaves may still list public symbols under Does.
 - Tests/scripts not decompiled.
 - Boundary violation lists are decompile-only; compile requires clean boundaries.
+- Scope text is best-effort from decompile; refine when something is mis-bucketed.

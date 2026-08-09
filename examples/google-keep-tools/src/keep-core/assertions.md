@@ -8,6 +8,15 @@ Collection: `src/keep-core/`
 
 Defensive assertions for write operations. See SPEC.md §2 (defensive assertions).
 
+## Scope
+
+**In scope** (belongs here):
+- Post-write defensive verify helpers against Keep server state
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Business mutations themselves
+- CLI
+
 ## Does
 
 Public callables (names observed at decompile):

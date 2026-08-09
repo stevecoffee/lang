@@ -8,6 +8,14 @@ Collection: `src/cli/`
 
 CLI surface for ``gkt list`` — parsers, handlers, and presentation.
 
+## Scope
+
+**In scope** (belongs here):
+- gkt list … parsers/handlers presentation
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- List create/meta/snapshot library semantics (lists, list-meta)
+
 ## Does
 
 Public callables (names observed at decompile):

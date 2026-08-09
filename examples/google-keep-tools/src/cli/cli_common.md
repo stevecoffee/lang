@@ -8,6 +8,15 @@ Collection: `src/cli/`
 
 Shared CLI helpers for gkt group modules (list / item / plan / shell / backup).
 
+## Scope
+
+**In scope** (belongs here):
+- Shared CLI helpers: dry-run flags, die, list REF→id login glue used by multiple CLIs
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- List address policy (lists)
+- Feature handlers
+
 ## Does
 
 Public callables (names observed at decompile):

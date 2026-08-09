@@ -8,6 +8,15 @@ Collection: `src/config-paths/`
 
 Shared filesystem path confinement and private-mode write helpers.
 
+## Scope
+
+**In scope** (belongs here):
+- Dual-prefix path confinement, symlink refusal, private atomic write stack
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Product-specific backup basename policy beyond primitives
+- Config TOML parse
+
 ## Does
 
 Public callables (names observed at decompile):

@@ -8,6 +8,16 @@ Collection: `src/keep-core/`
 
 Item manipulation primitives for Google Keep lists. See SPEC.md; IMPLEMENTATION.md.
 
+## Scope
+
+**In scope** (belongs here):
+- Item add/reorder/check/xmove primitives, sibling order, dry-run mutators on lists
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- List create/resolve policy (lists)
+- Extract scoring (extract-plan/scope-llm)
+- CLI presentation
+
 ## Does
 
 Public callables (names observed at decompile):

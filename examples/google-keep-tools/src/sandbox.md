@@ -6,6 +6,17 @@ Kind: collection (file `src/sandbox.md` + directory `src/sandbox/` — does not 
 
 google-keep-tools modules for **sandbox**.
 
+## Scope
+
+**In scope** (belongs here):
+- Sandbox list hygiene: bulk check-off clear, hard-delete purge of checked items on multi-lock sandbox
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Normal project/master list edits
+- Backup/restore
+- Extract/reorg
+- CLI wiring (handlers live in gkt/cli but semantics here)
+
 ## Children
 
 - [clear_sandbox](sandbox/clear_sandbox.md) ← `clear_sandbox.py`

@@ -8,6 +8,15 @@ Collection: `src/keep-core/`
 
 Exchange a Google `oauth_token` for a gkeepapi master token.
 
+## Scope
+
+**In scope** (belongs here):
+- One-time oauth_token → master token exchange and storage helpers
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Day-to-day resume login (keep_auth)
+- List operations
+
 ## Does
 
 Public callables (names observed at decompile):

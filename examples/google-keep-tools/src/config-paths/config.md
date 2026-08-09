@@ -8,6 +8,14 @@ Collection: `src/config-paths/`
 
 GKT settings: config-file first, with optional env compatibility.
 
+## Scope
+
+**In scope** (belongs here):
+- Public config facade: precedence docstring surface re-exports
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- settings/paths/llm implementation modules
+
 ## Does
 
 - Facade / re-exports or constants only (few or no public functions at module top level).

@@ -6,6 +6,18 @@ Kind: collection (product root)
 
 Standalone Python toolkit for reading and writing personal Google Keep: reorg oversized lists into smaller project/category notes without data loss. CLI: `gkt`. Unofficial `gkeepapi`.
 
+## Scope
+
+**In scope** (belongs here):
+- Product-level purpose of google-keep-tools as a whole
+- Pointers to concern collections under src/
+- Cross-cutting product facts (roles, main workflows) that apply globally
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Any single code file’s implementation or CLI wiring
+- Per-module algorithms, helpers, or file-local APIs
+- Tests, scripts, snapshots, secrets
+
 ## Children (collections under `src/`)
 
 - [backup.md](src/backup.md) + [backup/](src/backup/)

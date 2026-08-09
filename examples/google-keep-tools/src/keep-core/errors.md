@@ -8,6 +8,15 @@ Collection: `src/keep-core/`
 
 Shared user-facing error hierarchy for google-keep-tools.
 
+## Scope
+
+**In scope** (belongs here):
+- Shared GktError hierarchy for expected operator/data failures
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Assertion/server-verify helpers (assertions)
+- Feature logic
+
 ## Does
 
 - Facade / re-exports or constants only (few or no public functions at module top level).

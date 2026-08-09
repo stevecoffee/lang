@@ -8,6 +8,15 @@ Collection: `src/list-meta/`
 
 Kind style constants and list create/style helpers (SPEC §4; IMPLEMENTATION.md).
 
+## Scope
+
+**In scope** (belongs here):
+- List kind style: color/pin/role stamp without touching scope text
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Scope/repo text (meta_write)
+- Items
+
 ## Does
 
 Public callables (names observed at decompile):

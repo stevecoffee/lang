@@ -8,6 +8,15 @@ Collection: `src/list-meta/`
 
 Repo identity, normalize, and list healing (SPEC §4).
 
+## Scope
+
+**In scope** (belongs here):
+- [GKT:repo] binding helpers and find-by-repo resolution support
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Arbitrary item search
+- Git itself
+
 ## Does
 
 Public callables (names observed at decompile):

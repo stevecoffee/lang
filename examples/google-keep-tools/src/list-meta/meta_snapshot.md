@@ -8,6 +8,14 @@ Collection: `src/list-meta/`
 
 List snapshot payload/write glue and one-shot meta shape migrate.
 
+## Scope
+
+**In scope** (belongs here):
+- List snapshot capture/rotate for meta/list state backups in-product
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Full gkt-backup-v2 packages (backup/*)
+
 ## Does
 
 Public callables (names observed at decompile):

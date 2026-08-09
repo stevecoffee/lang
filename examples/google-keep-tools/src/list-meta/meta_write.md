@@ -8,6 +8,16 @@ Collection: `src/list-meta/`
 
 List property writers: colour, pin, list-scope, and repo tags (SPEC §4; IMPLEMENTATION.md).
 
+## Scope
+
+**In scope** (belongs here):
+- Write/update list-scope, repo, related meta under GKT parent
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Parse-only (meta_parse)
+- Style/color pin (meta_style) if separated
+- Items
+
 ## Does
 
 Public callables (names observed at decompile):

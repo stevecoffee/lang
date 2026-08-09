@@ -8,6 +8,15 @@ Collection: `src/keep-core/`
 
 Inventory every note in Google Keep. See SPEC.md; IMPLEMENTATION.md. Read-only account inventory; does not require GKT.
 
+## Scope
+
+**In scope** (belongs here):
+- Account inventory of notes/lists (notes list library)
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Single-list dump formatting (dump_list)
+- Mutations
+
 ## Does
 
 Public callables (names observed at decompile):

@@ -8,6 +8,15 @@ Collection: `src/cli/`
 
 Google Keep Tools — the only CLI.
 
+## Scope
+
+**In scope** (belongs here):
+- Root argparse, group registration, dispatch/main for gkt CLI only
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Library Keep operations
+- Handler bodies owned by other *_cli modules beyond wiring
+
 ## Does
 
 Public callables (names observed at decompile):

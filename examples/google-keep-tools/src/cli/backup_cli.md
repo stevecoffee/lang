@@ -8,6 +8,14 @@ Collection: `src/cli/`
 
 CLI surface for ``gkt backup`` — parsers, handlers, and presentation.
 
+## Scope
+
+**In scope** (belongs here):
+- gkt backup … parsers/handlers and stdout formatting
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Backup library (backup_*)
+
 ## Does
 
 Public callables (names observed at decompile):

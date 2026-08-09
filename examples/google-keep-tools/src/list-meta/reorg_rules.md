@@ -8,6 +8,15 @@ Collection: `src/list-meta/`
 
 Seed/verify the Keep reorg rules list (human-readable operator notes).
 
+## Scope
+
+**In scope** (belongs here):
+- Human reorg-rules list seed/show content (policy notes, not enforcement engine)
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Automatic reorg algorithms
+- Keep privilege matrix implementation (labels)
+
 ## Does
 
 Public callables (names observed at decompile):

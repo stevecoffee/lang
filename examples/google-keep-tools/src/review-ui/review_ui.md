@@ -8,6 +8,15 @@ Collection: `src/review-ui/`
 
 Fullscreen TTY review: include/exclude scored groups before apply.
 
+## Scope
+
+**In scope** (belongs here):
+- TTY UI to review scored extract candidates
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Scoring engine
+- Plan apply
+
 ## Does
 
 Public callables (names observed at decompile):

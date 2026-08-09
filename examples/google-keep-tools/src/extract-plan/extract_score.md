@@ -8,6 +8,15 @@ Collection: `src/extract-plan/`
 
 Extract score orchestration: progressive / threshold score → approved moves.
 
+## Scope
+
+**In scope** (belongs here):
+- Orchestrate progressive/threshold score → approved move set for extract
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- HTTP LLM client internals (llm)
+- Keep xmove execution
+
 ## Does
 
 Public callables (names observed at decompile):

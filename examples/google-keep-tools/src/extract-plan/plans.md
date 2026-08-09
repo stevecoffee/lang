@@ -8,6 +8,15 @@ Collection: `src/extract-plan/`
 
 Run a reviewable JSONL plan against Google Keep. See SPEC.md §5 Plans.
 
+## Scope
+
+**In scope** (belongs here):
+- Plan JSONL model, dry-run/apply engine for create_list/moves/etc.
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Backup restore plan generation (backup_restore)
+- Extract scoring
+
 ## Does
 
 Public callables (names observed at decompile):

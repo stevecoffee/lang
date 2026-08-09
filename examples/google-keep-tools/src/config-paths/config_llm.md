@@ -8,6 +8,15 @@ Collection: `src/config-paths/`
 
 LLM / scope / eval settings getters, API key resolve, host allowlists.
 
+## Scope
+
+**In scope** (belongs here):
+- LLM/scope/eval setting getters, API key resolve, host allowlists
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Performing LLM requests (llm.py)
+- Keep
+
 ## Does
 
 Public callables (names observed at decompile):

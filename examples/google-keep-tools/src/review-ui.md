@@ -6,6 +6,16 @@ Kind: collection (file `src/review-ui.md` + directory `src/review-ui/` — does 
 
 google-keep-tools modules for **review-ui**.
 
+## Scope
+
+**In scope** (belongs here):
+- Interactive TTY forms/state for params and extract review
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Non-interactive library scoring/apply
+- CLI argparse (cli/*)
+- Keep writes except by calling library after UI confirms
+
 ## Children
 
 - [params_ui](review-ui/params_ui.md) ← `params_ui.py`

@@ -8,6 +8,15 @@ Collection: `src/scope-llm/`
 
 Progressive / batch scope-score runners (queue worker + score_groups).
 
+## Scope
+
+**In scope** (belongs here):
+- Run loop orchestrating scope scoring over items
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- CLI
+- Plan apply
+
 ## Does
 
 Public callables (names observed at decompile):

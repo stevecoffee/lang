@@ -8,6 +8,15 @@ Collection: `src/scope-llm/`
 
 LLM chat scope scoring: prompts, parse, single-group score, selection helpers.
 
+## Scope
+
+**In scope** (belongs here):
+- LLM prompts/parsing for scope classification
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Cache
+- Apply moves
+
 ## Does
 
 Public callables (names observed at decompile):

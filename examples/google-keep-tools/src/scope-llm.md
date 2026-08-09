@@ -6,6 +6,17 @@ Kind: collection (file `src/scope-llm.md` + directory `src/scope-llm/` — does 
 
 google-keep-tools modules for **scope-llm**.
 
+## Scope
+
+**In scope** (belongs here):
+- HTTP LLM client, item/list scope scoring, score cache, local model eval harness
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Config file schema (config-paths) except reading settings
+- Keep mutations (keep-core/items)
+- Extract apply/plan apply (extract-plan)
+- TTY review UI (review-ui)
+
 ## Children
 
 - [llm](scope-llm/llm.md) ← `llm.py`

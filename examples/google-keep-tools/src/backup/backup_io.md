@@ -8,6 +8,16 @@ Collection: `src/backup/`
 
 Backup path confinement, private-mode writes, and atomic install (SPEC §6).
 
+## Scope
+
+**In scope** (belongs here):
+- Snapshot dir paths, basename confinement, mode-0600/atomic/gzip writers, write_plan JSONL
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Package JSON schema (backup_format)
+- Restore planning logic
+- General app config paths (config-paths) except shared patterns
+
 ## Does
 
 Public callables (names observed at decompile):

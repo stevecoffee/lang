@@ -8,6 +8,15 @@ Collection: `src/extract-plan/`
 
 Source-group collector + approach-A propose (eval / library).
 
+## Scope
+
+**In scope** (belongs here):
+- Propose groupings/moves helpers for reorg
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Final apply
+- CLI
+
 ## Does
 
 Public callables (names observed at decompile):

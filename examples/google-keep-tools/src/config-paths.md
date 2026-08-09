@@ -6,6 +6,18 @@ Kind: collection (file `src/config-paths.md` + directory `src/config-paths/` —
 
 google-keep-tools modules for **config-paths**.
 
+## Scope
+
+**In scope** (belongs here):
+- Settings load/precedence, path confinement, secret file reads, LLM-related config getters
+- Safe write path policy shared by config and writers
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Keep API login/session (keep-core/keep_auth)
+- Actual LLM chat calls (scope-llm/llm)
+- Backup-specific package format (backup/*) beyond shared path helpers
+- CLI surfaces
+
 ## Children
 
 - [config](config-paths/config.md) ← `config.py`

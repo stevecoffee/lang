@@ -8,6 +8,16 @@ Collection: `src/backup/`
 
 Backup group model and restore-plan generation (SPEC §6).
 
+## Scope
+
+**In scope** (belongs here):
+- Top-level group model, build_restore_plan clone/in-place JSONL objects
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- plan dry-run/apply execution (plans)
+- Package file read format details beyond inputs
+- CLI
+
 ## Does
 
 Public callables (names observed at decompile):

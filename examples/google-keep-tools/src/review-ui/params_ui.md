@@ -8,6 +8,15 @@ Collection: `src/review-ui/`
 
 Interactive missing-params form (extract v1).
 
+## Scope
+
+**In scope** (belongs here):
+- TTY parameter forms for missing extract/CLI params
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Non-interactive validation (extract_prepare)
+- Keep writes
+
 ## Does
 
 Public callables (names observed at decompile):

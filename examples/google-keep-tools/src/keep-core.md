@@ -6,6 +6,19 @@ Kind: collection (file `src/keep-core.md` + directory `src/keep-core/` — does 
 
 google-keep-tools modules for **keep-core**.
 
+## Scope
+
+**In scope** (belongs here):
+- Auth/session, list/item graph primitives, labels/privileges, dumps, shared errors/assertions
+- Anything that is the core Keep data-plane used by most features
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- CLI presentation layers (cli/*)
+- Backup packaging (backup/*)
+- Extract/plan orchestration (extract-plan/*)
+- LLM HTTP and scope scoring (scope-llm/*)
+- List-scope/repo/style meta writers (list-meta/*) except as callers of keep-core
+
 ## Children
 
 - [keep_auth](keep-core/keep_auth.md) ← `keep_auth.py`

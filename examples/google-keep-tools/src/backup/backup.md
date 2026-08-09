@@ -8,6 +8,16 @@ Collection: `src/backup/`
 
 Backup inventory, show, and restore-plan generators (SPEC §6).
 
+## Scope
+
+**In scope** (belongs here):
+- Public facade re-exports for backup inventory/package/restore-plan APIs
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Format/IO/restore implementation (sibling modules)
+- CLI
+- Applying plans
+
 ## Does
 
 - Facade / re-exports or constants only (few or no public functions at module top level).

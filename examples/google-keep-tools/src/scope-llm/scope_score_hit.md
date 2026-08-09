@@ -8,6 +8,15 @@ Collection: `src/scope-llm/`
 
 Score-cache hit resolve and merge into progressive seed rows.
 
+## Scope
+
+**In scope** (belongs here):
+- Hit/threshold interpretation for scope scores
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Network calls
+- Keep writes
+
 ## Does
 
 Public callables (names observed at decompile):

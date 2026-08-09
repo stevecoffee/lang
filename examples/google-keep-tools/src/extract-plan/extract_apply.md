@@ -8,6 +8,15 @@ Collection: `src/extract-plan/`
 
 Extract apply layer: plan lines + create_list/moves via ``plans.run_plan``.
 
+## Scope
+
+**In scope** (belongs here):
+- Build plan lines and run create_list+moves for extract via plans
+
+**Out of scope** (belongs elsewhere — reject as content of this node):
+- Scoring
+- CLI
+
 ## Does
 
 Public callables (names observed at decompile):
