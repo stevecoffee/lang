@@ -108,6 +108,8 @@ Programmers already think in layers: system → package → module → function.
 
 A meta “file” is not classic code with comments; it is a **node in a refinement tree**. Child nodes refine parents; condensation rolls detail upward without losing requirements.
 
+**Working-memory budget:** each MetaCode file stays small (on the order of one screen / few sections) — same spirit as a line-count limit on a code file. Detail that does not fit goes to **child** nodes, not a longer essay. Root meta should match what a developer holds in mind for that unit, not a full design dump. Normative guidelines live in [`docs/language.md`](docs/language.md) §2.1.
+
 Large systems compile **by subtree** when needed so each run’s MetaCode input stays within context limits; parent nodes contribute interface/contract, not the whole monorepo dump.
 
 ### 2.2 Deterministic skeleton, non-deterministic flesh
@@ -350,3 +352,4 @@ Stages are **skill-mediated** until tooling exists. Each arrow is a closed-conte
 | 2026-08-09 | Absorbed Keep background, principles, and Phase 1–3 / someday detail; human+LLM-first posture; scripted tooling deferred (D8). Keep remains todos-only for this content. |
 | 2026-08-09 | Closed-context compile/decompile via skills/prompts (§1.1–1.2); Phase 1–3 artifacts are language def, MetaCode, and skills—not ambient agents or required scripted toolchains; D9–D10 opened. |
 | 2026-08-09 | Scaffold: `docs/language.md`, playbooks, `skills/metacompile|metadecompile`, `examples/todo` (full-screen todo editor meta); D10 closed; D9 in-repo skills. |
+| 2026-08-09 | Critique pass: thin `examples/todo/meta.md`; language §2.1 working-memory budget / progressive disclosure; SPEC §2.1 notes concept limit per file. |

@@ -29,28 +29,24 @@ If information is missing, **fail clearly** in the compile report and emit only 
 
 ## Procedure
 
-1. Parse MetaCode as a **refinement tree** (headings / hierarchy).  
-2. Build the **skeleton**: modules, components, names, public surface, file layout, test shells — all from meta.  
-3. Fill **bodies** under that skeleton (algorithms, wiring) without changing the skeleton.  
-4. Emit **tests** from co-specified scenarios under the same features (same coin).  
+1. Read MetaCode as a **small refinement tree** — prefer short root files; do not demand missing ceremony.  
+2. Take **What / Not / Shape / Does / Check** (or equivalent) as authority for product scope.  
+3. Where meta **names** parts or layout, honor them. Where it does not, choose a simple structure and list choices in the report.  
+4. Emit **tests** from Does/Check (same coin), not from a fictional scenario catalog.  
 5. Write outputs to the destination path given by the operator (default: `examples/<name>/machine/`).  
-6. Write `COMPILE_REPORT.md` in that destination covering:
-   - assumptions  
-   - any elaborations you believe meta forced vs optional  
-   - conflicts or ambiguities  
-   - questions for the meta author  
+6. Write `COMPILE_REPORT.md`: choices, gaps, conflicts, questions.
 
 ## Output contract
 
 | Output | Required |
 |--------|----------|
 | Machine source tree | Yes |
-| Tests runnable (or clearly marked manual scenarios) | Yes |
+| Tests from Does/Check | Yes |
 | `COMPILE_REPORT.md` | Yes |
-| New modules not in meta | **No** |
+| Product scope not in meta | **No** |
 
 ## Success criteria
 
-- Structure and names are meta-driven and stable under re-run intent  
-- A meta edit that changes behavior would require a recompile that changes product and tests together  
-- No undeclared inputs were needed; if they were, report that as a language/meta defect  
+- A human can still read the meta in one screen and recognize the app  
+- Does/Check drive product and tests together  
+- No undeclared inputs; missing product facts → report, don’t invent scope  

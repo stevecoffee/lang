@@ -30,30 +30,23 @@ If sources are incomplete, record **unknowns** rather than fabricating certainty
 ## Procedure
 
 1. Inventory declared sources (modules, surfaces, tests, persistence).  
-2. Build a **hierarchical MetaCode** tree matching the language definition’s essential components:
-   - Purpose (only if evidenced)  
-   - Architecture  
-   - Surface  
-   - Behavior + tests (same coin; scenarios from tests and observed behavior)  
-   - Data / state  
-   - Infra (only if present)  
-   - Non-goals / unknowns  
-3. Prefer **contracts, names, and behavior** over algorithms and file chatter.  
-4. Apply **no redundancy**: each fact once, refined downward.  
+2. Emit **short** MetaCode a human can hold in working memory (language §2.1 budget): What, Not, Shape, Does, Check — more detail only as child nodes if needed.  
+3. Prefer **behavior and shape** over file tours and algorithm dumps.  
+4. **No redundancy**; don’t invent scenario IDs or module tables unless they clarify.  
 5. Emit MetaCode to the path the operator specifies.  
-6. Optionally emit `DECOMPILE_REPORT.md` with source set, unknowns, and confidence notes.
+6. Optionally emit `DECOMPILE_REPORT.md` with source set, unknowns, confidence.
 
 ## Output contract
 
 | Output | Required |
 |--------|----------|
-| MetaCode in language shape | Yes |
-| Human-editable hierarchy | Yes |
-| Verbatim code paste as meta body | **No** |
+| Short, human-editable MetaCode | Yes |
+| Within working-memory budget at each file | Yes |
+| Verbatim code paste as meta | **No** |
 | Unknowns called out | Yes when uncertain |
 
 ## Success criteria
 
-- Another agent could **compile** this meta under closed context toward behavioral parity  
-- Meta is pleasant for a human to edit  
+- A developer would actually keep this meta as the mental model  
+- Compile could rebuild behavior under closed context  
 - No undeclared inputs were used  

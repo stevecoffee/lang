@@ -25,23 +25,43 @@ Working names: **MetaCode** (language), **MetaCompiler** / compile skill (emit),
 ## 2. Artifact model
 
 - A MetaCode unit is a **node in a refinement tree**, not classic code with comments.
-- Hierarchy is expressed with nested headings (Markdown) or an equivalent tree of files.
-- **Parents** own summary intent and contracts; **children** refine without contradicting parents.
-- **Condense** rolls detail upward without dropping requirements.
-- **Expand / compile** may decompose a node into finer MetaCode nodes, then into machine code.
-- Large systems: compile **by subtree** when needed; do not dump the whole monorepo into one run.
+- Hierarchy is nested headings and/or separate files for children.
+- **Parents** hold what you keep in your head for that unit; **children** hold detail only when someone is working that part.
+- **Condense** upward; **expand** downward. Never paste the whole system into one flat essay.
+- Compile may use one subtree at a time so a run stays small.
 
-### 2.1 Essential components (what meta may / should cover)
+### 2.1 Progressive disclosure (working-memory budget)
 
-| Component | Purpose |
-|-----------|---------|
-| Purpose / intent | Why the system exists |
-| Architecture | Boundaries, modules, data flow |
-| Surface | User-visible or API-visible interface |
-| Behavior + tests | Same coin — features and how we know they work |
-| Data / state | Entities, persistence, lifecycle |
-| Infra | Runtime deps (DB, servers) only as needed |
-| Non-goals / open questions | Stops fake precision |
+Meta exists to **simplify the mental model**, not to front-load every design decision.
+
+A developer is not holding modules, timestamps, scenario IDs, and infra notes all at once. Meta must match that.
+
+**Soft limits per MetaCode file** (like a line-count budget for code files) — revise numbers if practice demands, but keep *a* budget:
+
+| Budget | Guideline |
+|--------|-----------|
+| Length | About **one screen** when skimming (~40–60 lines); flag if much longer |
+| Top-level sections | At most **~7** |
+| Bullets per section | At most **~7** |
+| Concepts on the page | Only what you need to **explain or change this unit today** |
+
+**Detail goes down, not sideways.** Module lists, field catalogs, keybindings, scenario matrices → child nodes or later expansion when that layer is in focus — not the root file “just in case.”
+
+**Root of an app** should read like a sharp product pitch + shape + does/check — not a design doc dump.
+
+### 2.2 What a unit usually answers (not a forced outline)
+
+Cover these **as briefly as truth allows**. Do **not** open a long section for each if one line will do.
+
+| Concern | In plain terms |
+|---------|----------------|
+| What is it? | One or two sentences |
+| Not this | Out of scope (short) |
+| Shape | Main parts, data you care about, where it lives |
+| Does | Behaviors (and checks live here or as “same as does”) |
+| Stack / deps | Only if needed to build or run |
+
+Architecture diagrams, module tables, and infra appear **when the unit is about that**, or as children of Shape — not as mandatory ceremony.
 
 ---
 
@@ -49,31 +69,33 @@ Working names: **MetaCode** (language), **MetaCompiler** / compile skill (emit),
 
 ### 3.1 Structure owns skeleton; model fills flesh
 
-- Meta (and the compile process) owns **names, module graph, public surface, file layout**.
-- The model **must not invent** new modules, public APIs, or layout that meta did not authorize.
-- Bodies (algorithms, UI wiring details not fixed in meta) may be filled by the model under that skeleton.
-- Prefer deterministic structure across recompiles; flesh need not be bit-identical.
+- Where meta **names** parts, layout, or public surface, compile must honor them.
+- Where meta stays silent, compile may choose reasonable structure and must record choices in the compile report — **do not** force authors to pre-list every module to get a first build.
+- Prefer meta that states **intent and shape** over meta that micro-specifies files.
 
 ### 3.2 Code and tests are one coin
 
-- Specify production behavior and checks **together** under the same feature nodes where possible.
-- Prefer minimal MetaCode vs MetaBDD split: tests largely fall out of the same description.
-- **Elaborations allowed:** explicit always-on test cases; architecture choices not implied by features (prefer hierarchy over a parallel novel).
+- Prefer **Does** + **Check** (or “check = does, including after restart”) over a parallel test novel and scenario ID catalogs.
+- Extra fixed cases only when they are not obvious from Does.
 
 ### 3.3 No redundancy
 
-- State each requirement or rule **once**, at the right level of the tree.
-- Refine in children; do not restate the same fact in siblings or parallel docs.
+- Each fact **once**. Refine in children; do not restate in siblings.
 
 ### 3.4 Embed, don’t doc-drift
 
-- Machine code should carry meta intent via **naming and structure**, not hand-maintained parallel documentation.
-- Docs as compile output are fine; docs as a second source of truth are not.
+- Machine code carries intent via naming/structure; not a second hand-maintained doc tree.
 
 ### 3.5 Simple as possible
 
-- Prefer human-editable hierarchical Markdown (or equivalent) until formal grammar is justified.
-- Closed-context skills implement compile/decompile before any custom parser/codegen engine.
+- Prefer plain language a human will actually edit.
+- Prefer hierarchical Markdown until formal grammar is justified.
+- Closed-context skills before custom parser/codegen.
+
+### 3.6 Prefer obvious over cryptic
+
+- No fake precision (S1…S12, internal codenames) unless it helps a human.
+- Short words beat framework jargon when both mean the same thing.
 
 ---
 
@@ -88,10 +110,10 @@ compile(language_definition, metacode) → machine_code + tests + compile_report
 
 **Compile must:**
 
-1. Derive module/file/function (or UI component) names and layout from meta.  
-2. Emit classic code + tests consistent with co-specified scenarios.  
-3. Refuse or flag meta gaps rather than silently inventing structure.  
-4. Produce a short **compile report**: assumptions, elaborations, conflicts, questions.
+1. Honor names/layout/surface **when meta states them**; otherwise choose simply and report choices.  
+2. Emit classic code + tests aligned with **Does/Check** (not a missing scenario encyclopedia).  
+3. Prefer asking via compile report over inventing product scope.  
+4. Produce a short **compile report**: choices, gaps, conflicts, questions.
 
 **Brownfield** (meta + existing machine + drift rules) is a **separate mode** — not default greenfield compile.
 
@@ -130,4 +152,5 @@ decompile(language_definition, declared_sources) → metacode [+ unknowns]
 
 | Version | Notes |
 |---------|--------|
-| 0.1-stub | Initial loadable def split from SPEC; expect rapid revision after first todo example loop |
+| 0.1-stub | Initial loadable def split from SPEC |
+| 0.2 | Working-memory budget / progressive disclosure; thinner root meta; less forced ceremony |
