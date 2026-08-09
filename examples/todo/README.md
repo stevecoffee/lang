@@ -1,43 +1,37 @@
-# Example: full-screen todo editor
+# Example: Todo
 
-First Phase 1 example system for MetaCode.
+Full-screen text todo list. Meta is a **layer ladder** L0→L3; code is L4 under `machine/`.
 
-## Intent
+## Layers
 
-Full-screen **text** todo app: list of items, keyboard-driven. Meta is plain-language product truth (fine for non-programmers). Implementation is chosen at compile time.
+| File | Layer |
+|------|--------|
+| [L0.md](L0.md) | Product |
+| [L1.md](L1.md) | Behavior |
+| [L2.md](L2.md) | Architecture |
+| [L3.md](L3.md) | Detailed design |
+| [meta.md](meta.md) | Index |
+| [machine/](machine/) | L4 emit (after compile) |
 
-**Hierarchy:** `meta.md` may use **sections as stand-ins** for child nodes; multi-file meta comes later. Format is informal until content settles.
-
-## Paths
-
-| Artifact | Path |
-|----------|------|
-| MetaCode (source of truth) | [`meta.md`](meta.md) |
-| Emitted machine code | [`machine/`](machine/) — empty until a compile run |
-| Language definition | [`../../docs/language.md`](../../docs/language.md) |
-| Compile skill | [`../../skills/metacompile/SKILL.md`](../../skills/metacompile/SKILL.md) |
-| Decompile skill | [`../../skills/metadecompile/SKILL.md`](../../skills/metadecompile/SKILL.md) |
-
-## Host language
-
-**TBD** (open decision D2). Declare the choice in `meta.md` under Architecture when locked. Prefer one of: TypeScript or Python; UI may be terminal full-screen (TUI) or simple web full-viewport — pick one stack when compiling, record it in meta.
+Plain language at the top; more design detail as you go down. Non-programmers can stay on L0–L1. Implementer agents use L3 (with parents) under closed context.
 
 ## Compile (closed context)
 
 See [`docs/playbooks/compile.md`](../../docs/playbooks/compile.md).
 
-Agent inputs **only**:
+**Implementer-style run** — agent sees only:
 
 1. `docs/language.md`  
-2. `examples/todo/meta.md`  
+2. `examples/todo/L0.md` … `L3.md` (or L3 + short parents)  
 3. `skills/metacompile/SKILL.md`  
 
 Emit into `examples/todo/machine/`.
 
+Stack/toolkit still chosen at compile if not pinned in L2/L3; record choices in `COMPILE_REPORT.md`.
+
 ## Status
 
-- [x] Directory stub  
-- [x] Meta skeleton (`meta.md`)  
-- [ ] Meta filled enough for first compile  
-- [ ] First closed-context compile run  
-- [ ] Host tests green  
+- [x] L0–L3 drafted from root sketch  
+- [ ] Human pass on content  
+- [ ] First closed-context compile (L3 → machine)  
+- [ ] Tests green  
