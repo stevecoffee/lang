@@ -13,11 +13,12 @@ Living product contract. This file owns **thesis, principles, phase scope, and h
 | Need | Doc / surface |
 |---|---|
 | Living product contract | **this file (SPEC.md)** — product, phases, process; not the default compile-time context |
-| **Language definition** (loadable) | Dedicated artifact (e.g. `docs/language.md`) — **compiler-facing** semantics only; what agents load on a run |
-| MetaCode (project) | Hierarchical meta file(s) for a system under description |
-| Compile / decompile ops | **Versioned skills or prompt packs** (not ambient chat; not scripted AST tooling yet) |
+| **Language definition** (loadable) | [`docs/language.md`](docs/language.md) — **compiler-facing** semantics only; what agents load on a run |
+| MetaCode (example) | e.g. [`examples/todo/meta.md`](examples/todo/meta.md) — hierarchical meta for a system |
+| Compile / decompile ops | [`skills/metacompile`](skills/metacompile/SKILL.md), [`skills/metadecompile`](skills/metadecompile/SKILL.md); playbooks under [`docs/playbooks/`](docs/playbooks/) |
 | Source repository | [github.com/stevecoffee/lang](https://github.com/stevecoffee/lang) (`origin`) |
 | Operational work list | Keep **`Meta coding language project`** — `gkt list find-by-repo` from this worktree |
+| Repo map | [`README.md`](README.md) |
 | Implementation notes | *not yet* (`IMPLEMENTATION.md` when needed) |
 | Closed archaeology | *not yet* (`HISTORY.md` as decisions close) |
 
@@ -180,13 +181,13 @@ Work **cycles** through phases and improves iteratively. A first full pass shoul
 
 **Phase 1 artifacts**
 
-| Artifact | Role |
+| Artifact | Role / path |
 |---|---|
-| **Language definition** (`docs/language.md` or successor) | Loadable, compiler-facing semantics: shape, node kinds, hard rules, compile/decompile meaning, output/naming conventions. **Not** the full SPEC. |
-| **MetaCode example(s)** | At least one hierarchical meta for a small real-ish system (e.g. under `examples/…`). |
-| **Compile skill/prompt** | Closed-context procedure: inputs = language def + MetaCode only; outputs = machine + tests + report. |
-| **Decompile skill/prompt** (stub OK early) | Closed-context procedure: inputs = language def + declared sources; outputs = MetaCode. |
-| **Playbook notes** (optional, short) | Human-facing how to invoke a run; no extra semantics beyond language def + skills. |
+| **Language definition** | [`docs/language.md`](docs/language.md) — loadable semantics: shape, hard rules, compile/decompile meaning. **Not** the full SPEC. |
+| **MetaCode example(s)** | First example: [`examples/todo/meta.md`](examples/todo/meta.md) (full-screen todo editor). Emit dir: `examples/todo/machine/`. |
+| **Compile skill** | [`skills/metacompile/SKILL.md`](skills/metacompile/SKILL.md) — inputs = language def + MetaCode only. |
+| **Decompile skill** | [`skills/metadecompile/SKILL.md`](skills/metadecompile/SKILL.md) — inputs = language def + declared sources. |
+| **Playbooks** | [`docs/playbooks/compile.md`](docs/playbooks/compile.md), [`docs/playbooks/decompile.md`](docs/playbooks/decompile.md) — invoke runs; no extra language meaning. |
 | **This SPEC** | Product contract and phase map; **not** default agent input on a compile run. |
 
 **Phase 1 non-artifacts:** formal grammar, scripted MetaCompiler binary, harness/chrome.
@@ -308,8 +309,8 @@ Stages are **skill-mediated** until tooling exists. Each arrow is a closed-conte
 | D6 | First decompile scope | Whole repo vs module; role of tests/docs in declared sources |
 | D7 | Repo remote + Keep `[GKT:repo]` | **Closed 2026-08-09:** `https://github.com/stevecoffee/lang` |
 | D8 | When to introduce scripted tooling | After language + skill I/O contracts are stable; tooling must preserve §1.2 |
-| D9 | Skill packaging | In-repo prompt packs vs Grok/user skills; paths TBD |
-| D10 | Language def path/name | e.g. `docs/language.md` — split from SPEC when drafted |
+| D9 | Skill packaging | **In-repo** under `skills/metacompile` and `skills/metadecompile`; may symlink/copy into agent skill dirs later |
+| D10 | Language def path/name | **Closed 2026-08-09:** `docs/language.md` |
 
 ---
 
@@ -348,3 +349,4 @@ Stages are **skill-mediated** until tooling exists. Each arrow is a closed-conte
 | 2026-08-09 | GitHub `stevecoffee/lang`; Keep `[GKT:repo]` bound; D7 closed. |
 | 2026-08-09 | Absorbed Keep background, principles, and Phase 1–3 / someday detail; human+LLM-first posture; scripted tooling deferred (D8). Keep remains todos-only for this content. |
 | 2026-08-09 | Closed-context compile/decompile via skills/prompts (§1.1–1.2); Phase 1–3 artifacts are language def, MetaCode, and skills—not ambient agents or required scripted toolchains; D9–D10 opened. |
+| 2026-08-09 | Scaffold: `docs/language.md`, playbooks, `skills/metacompile|metadecompile`, `examples/todo` (full-screen todo editor meta); D10 closed; D9 in-repo skills. |
