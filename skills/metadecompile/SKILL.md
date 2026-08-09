@@ -32,10 +32,11 @@ Collections (parents that group leaves) are a separate step after per-file leave
 ## Procedure
 
 1. Read the one code file.  
-2. Emit **one** leaf MetaCode file focused on **constraints and ownership**: purpose, **in scope / out of scope**, invariants, decisive contracts, checks — not a full public-API dump or line tour.  
-3. If the source file is a **kitchen sink** (no coherent single ownership), do **not** fake a clean leaf: under `# Agent` mark **needs split**, optionally sketch multiple proposed leaves; user zone may state that the file has no honest single boundary.  
-4. Optional: symbol inventories under `# Agent` only if useful for navigation.  
-5. Optional short decompile report: path mapping, unknowns, split recommendations.
+2. Emit **one** leaf MetaCode file: purpose, **intended in/out scope**, invariants, decisive contracts, checks.  
+3. If the current code **violates** that intended boundary: keep the boundary clear, then **enumerate violations** (what is in this file but out of scope). This pattern is **decompile-only** — not for greenfield authoring.  
+4. Optional `# Agent`: needs split, proposed leaves, symbol notes.  
+5. Optional decompile report: path mapping, unknowns, split recommendations.  
+6. Remind: **compile requires clean boundaries** (no violation lists) — violation lists are a lift artifact, not a compile input.
 
 ## Output contract
 

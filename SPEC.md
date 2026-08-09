@@ -34,7 +34,11 @@ Create an **intermediate higher-level language** (working name: MetaCode) for hi
 
 **Meta pins constraints; compile fills the rest.** Not a full enumeration of coding decisions.
 
-**Every meta file (collection or leaf) must define boundaries:** what is **in scope** here vs **out of scope** / owned elsewhere. Vague ownership is invalid meta — it is how kitchen-sink modules appear. That MetaCode cannot honestly represent some legacy god-files as one leaf is intentional; decompile should split or flag **needs split** rather than bless a sink.
+**Every meta file (collection or leaf) must define boundaries:** what is **in scope** here vs **out of scope** / owned elsewhere.
+
+**Decompile (legacy only):** state the intended boundary, then **enumerate violations** still present in that code file. Do not use violation lists when authoring greenfield meta.
+
+**Compile prerequisite:** boundaries must be **clean — no violation/exception lists**. Meta that still records decompile-era violations is not ready to compile; fix or split first. Compile must not re-create kitchen sinks.
 
 **Two constraint surfaces (same tree):**
 
@@ -369,3 +373,4 @@ Stages are **skill-mediated** until tooling exists. Each arrow is a closed-conte
 | 2026-08-09 | Constraints-first meta (not full enumeration); language v0.6. |
 | 2026-08-09 | Dual surfaces: product BDD-like + developer architecture (leaf↔file); language v0.7. |
 | 2026-08-09 | Required in/out scope on every node; kitchen-sink decompile may refuse/split; language v0.8. |
+| 2026-08-09 | Decompile: boundary + violation list; compile: clean boundaries only; language v0.9. |

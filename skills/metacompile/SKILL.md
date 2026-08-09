@@ -32,6 +32,7 @@ Collection meta files do **not** emit code; they only provide context / grouping
 
 Meta states **constraints**, not a full coding script.  
 The leaf must have clear **in scope / out of scope** (or equivalent boundary). If missing, report gap — do not invent a kitchen-sink file.  
+**Refuse compile** if the meta still lists **boundary violations** / exceptions from decompile — clean boundaries are a prerequisite (no exception lists on the compile path).  
 Missing *implementation inside this file* → choose within constraints, report it.  
 Missing *constraints this file must honor* → report gap; do not invent major product scope.  
 Do not require a complete function roster in meta.  

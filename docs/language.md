@@ -52,9 +52,20 @@ This is a **first-class constraint**, not optional documentation.
 
 **Why:** If boundaries are vague, compile invents kitchen-sink modules and collections that “also do a bit of everything.” Sharp boundaries force modularization.
 
-**Kitchen-sink source files:** A code file that mixes unrelated responsibilities may **not** decompile cleanly into one honest leaf — the leaf would have an incoherent inside/outside. That is a **benefit** of the language: MetaCode should not be able to *create* such sinks in the first place. Decompile may refuse, split into multiple proposed leaves, or mark the file as **needs split** under `# Agent` rather than bless a muddled single leaf.
-
 **Author test (boundary):** Can you name one thing that must **not** appear in this node’s code (or child set)? If not, the boundary is too weak.
+
+#### Boundary violations (decompile only)
+
+When **decompiling** legacy code that already mixes concerns, the simple pattern is:
+
+1. State the **intended** boundary clearly (in scope / out of scope).  
+2. **Enumerate violations** present in the current code file (things that are in the file but out of scope for that boundary).
+
+That keeps the rule honest without pretending the file is clean.
+
+**Decompile only.** Listing “violations in this file” is a **side effect of lifting existing code**. It must not appear as a normal authoring pattern for greenfield meta.
+
+**Compile prerequisite:** boundaries must be defined **cleanly, with no exception/violation list**. A leaf (or collection) that still carries decompile-era violations is **not compilable** until the meta is cleaned (split leaves, move responsibilities, or drop the violation list because the code/design was fixed). Compile must **refuse** rather than re-emit a kitchen sink under a violated boundary.
 
 ### 1.2 Two constraint surfaces (product vs architecture)
 
@@ -226,7 +237,8 @@ compile_leaf(language_definition, leaf_meta [, parent_context])
 
 **Must not:** emit multiple peer source files from one leaf; invent sibling modules that should be other leaves; treat missing helper lists as missing product constraints.
 
-**Must:** satisfy stated constraints; invent only within them; report free choices.
+**Must:** satisfy stated constraints; invent only within them; report free choices.  
+**Must refuse:** leaf meta that still documents **boundary violations** / exception lists from decompile — clean the meta (and design) first; compile only clean boundaries.
 
 ### 7.2 Collection compile (MVP)
 
@@ -250,9 +262,10 @@ decompile_file(language_definition, one_code_file)
 **Inputs:** language def; **one** declared code file; decompile skill.  
 **Output:** **one** leaf MetaCode file of **constraints and ownership** for that file (not a line tour or full API roster).
 
-**Prefer:** purpose, **in/out scope**, invariants, decisive contracts, checks.  
+**Prefer:** purpose, **in/out scope** (intended boundary), invariants, decisive contracts, checks.  
+**If the current code violates that boundary:** still state the boundary, then **enumerate violations** in this file (decompile-only pattern). Optional `# Agent`: needs split / proposed leaves.  
 **Avoid (in user zone):** complete public-symbol dumps; those may sit under `# Agent` if useful for navigation.  
-**If the code file is a kitchen sink:** do not force a single clean leaf — report **needs split** (or propose multiple leaves); MetaCode is not obliged to mirror bad modularization.
+**Never treat violation lists as a normal greenfield style** — they exist only to describe legacy mess on the way to a clean tree.
 
 ### 8.2 Building the tree
 
@@ -288,3 +301,4 @@ examples/<name>/
 | 0.6 | Meta = **constraints** (not full enumeration); compile fills implied decisions; decompile recovers constraints/ownership |
 | 0.7 | Dual surfaces: product BDD-like (examples/rules) + developer architecture (leaf ↔ file) |
 | 0.8 | Every node must define in/out scope and boundaries; kitchen-sink decompile may refuse or split |
+| 0.9 | Decompile may list boundary violations under a clear intended boundary; compile requires clean boundaries (no exceptions) |
