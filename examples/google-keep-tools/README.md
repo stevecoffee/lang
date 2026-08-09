@@ -4,22 +4,31 @@ Best-effort MetaCode lift of production modules from google-keep-tools.
 
 ## Layout rule
 
-- A **collection** is a **directory** whose children are meta files (or nested collections).
-- A **leaf** is a meta file that maps to **one** code file (`Code file:` in the leaf).
-- Names have **no** `C.` / `L0.` / `leaves/` prefixes; leaf files are named after the module stem (`items.md` ↔ `items.py`).
-- Collection overview lives in that directory’s `meta.md`.
-- Product root: [meta.md](meta.md) plus collection directories beside it.
+A **collection** is two siblings in the same folder:
+
+```text
+backup.md          ← collection meta (constraints / child list)
+backup/            ← directory of children only (leaves)
+  backup.md        ← leaf ↔ backup.py
+  backup_format.md
+  …
+```
+
+- Collection file sits **one level up**, not inside the self-named directory.
+- Leaves live **only** in the directory; named by module stem (`items.md` ↔ `items.py`).
+- No `C.` / `L0.` / inner collection `meta.md`.
+- Product root: [meta.md](meta.md) plus collection pairs beside it.
 
 ## Collections
 
-- [backup/](backup/)
-- [cli/](cli/)
-- [config-paths/](config-paths/)
-- [extract-plan/](extract-plan/)
-- [keep-core/](keep-core/)
-- [list-meta/](list-meta/)
-- [review-ui/](review-ui/)
-- [sandbox/](sandbox/)
-- [scope-llm/](scope-llm/)
+- [backup.md](backup.md) / [backup/](backup/)
+- [cli.md](cli.md) / [cli/](cli/)
+- [config-paths.md](config-paths.md) / [config-paths/](config-paths/)
+- [extract-plan.md](extract-plan.md) / [extract-plan/](extract-plan/)
+- [keep-core.md](keep-core.md) / [keep-core/](keep-core/)
+- [list-meta.md](list-meta.md) / [list-meta/](list-meta/)
+- [review-ui.md](review-ui.md) / [review-ui/](review-ui/)
+- [sandbox.md](sandbox.md) / [sandbox/](sandbox/)
+- [scope-llm.md](scope-llm.md) / [scope-llm/](scope-llm/)
 
 See [DECOMPILE_REPORT.md](DECOMPILE_REPORT.md).

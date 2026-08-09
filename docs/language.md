@@ -246,15 +246,15 @@ When a tree has multiple collections, prefer:
 
 ```text
 examples/<name>/
-  meta.md              # product root collection (optional name)
-  <collection>/        # collection = directory of children
-    meta.md            # that collection’s constraints / child list
-    <leaf>.md          # leaf named after module stem (e.g. items.md ↔ items.py)
-  machine/             # emitted code (one file per compiled leaf)
+  meta.md                 # product root collection (optional)
+  <collection>.md         # collection meta (sibling of directory)
+  <collection>/           # children only (leaves / nested collections)
+    <leaf>.md             # leaf named after module stem (items.md ↔ items.py)
+  machine/                # emitted code (one file per compiled leaf)
 ```
 
-- **No layout prefixes** in names (`C.`, `L0.`, `leaves/` bags).  
-- Collection ↔ directory; leaf ↔ one file inside (or nested) that directory.  
+- **Collection** = `name.md` **beside** `name/` (not `name/meta.md` inside — avoids clashing with a leaf also called `name.md`).  
+- **No layout prefixes** (`C.`, `L0.`, flat `leaves/` bags).  
 - Need not mirror the original source tree.
 
 ---

@@ -7,9 +7,14 @@
 
 ## Layout (revised)
 
-Collections are **directories**. Each directory’s `meta.md` describes the collection; sibling `*.md` files are leaves (1 ↔ 1 code file). Names have no layout prefixes.
+Each collection is a **file + directory pair** in the same parent folder:
 
+- `backup.md` — collection meta  
+- `backup/` — children (leaf meta files only)
+
+Leaves are named by module stem (`backup/backup_format.md` ↔ `backup_format.py`).  
 This does **not** preserve the original source tree; grouping is by concern.
+
 
 ## Map
 
