@@ -34,6 +34,8 @@ Create an **intermediate higher-level language** (working name: MetaCode) for hi
 
 **Meta pins constraints; compile fills the rest.** Not a full enumeration of coding decisions.
 
+**Every meta file (collection or leaf) must define boundaries:** what is **in scope** here vs **out of scope** / owned elsewhere. Vague ownership is invalid meta — it is how kitchen-sink modules appear. That MetaCode cannot honestly represent some legacy god-files as one leaf is intentional; decompile should split or flag **needs split** rather than bless a sink.
+
 **Two constraint surfaces (same tree):**
 
 1. **Product (BDD-like)** — behavior by **example** and/or **simple rules**. Top-down; accessible to non-programmers. Lives mainly in upper **collections** / product nodes.  
@@ -366,3 +368,4 @@ Stages are **skill-mediated** until tooling exists. Each arrow is a closed-conte
 | 2026-08-09 | MVP: leaf meta ↔ one code file; collections group only; decompile per file; non-programmer access = inspiration; language v0.5. |
 | 2026-08-09 | Constraints-first meta (not full enumeration); language v0.6. |
 | 2026-08-09 | Dual surfaces: product BDD-like + developer architecture (leaf↔file); language v0.7. |
+| 2026-08-09 | Required in/out scope on every node; kitchen-sink decompile may refuse/split; language v0.8. |

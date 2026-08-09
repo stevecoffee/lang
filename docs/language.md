@@ -38,6 +38,24 @@ If the **constraints are right**, most remaining decisions are **implied** and m
 
 **Decompile test:** lift **constraints and ownership**, not a dump of every public symbol (symbol lists are optional Agent/debug aids, not the ideal user zone).
 
+### 1.1a Boundaries and scope (required on every node)
+
+Every MetaCode file — **collection or leaf** — must make **inside vs outside** explicit enough that compile and readers know what may live here and what must not.
+
+| State clearly | Meaning |
+|---------------|---------|
+| **In scope / owns** | What this node is responsible for (product rules, or for a leaf: this code file’s job) |
+| **Out of scope / does not own** | What belongs elsewhere (other files, other collections, other layers) |
+| **Boundary** | Edges: what it may depend on, call, or expose — and what it must not pull in |
+
+This is a **first-class constraint**, not optional documentation.
+
+**Why:** If boundaries are vague, compile invents kitchen-sink modules and collections that “also do a bit of everything.” Sharp boundaries force modularization.
+
+**Kitchen-sink source files:** A code file that mixes unrelated responsibilities may **not** decompile cleanly into one honest leaf — the leaf would have an incoherent inside/outside. That is a **benefit** of the language: MetaCode should not be able to *create* such sinks in the first place. Decompile may refuse, split into multiple proposed leaves, or mark the file as **needs split** under `# Agent` rather than bless a muddled single leaf.
+
+**Author test (boundary):** Can you name one thing that must **not** appear in this node’s code (or child set)? If not, the boundary is too weak.
+
 ### 1.2 Two constraint surfaces (product vs architecture)
 
 Top-down and developer concerns are **both** first-class; they sit at different depths of the same tree.
@@ -151,8 +169,8 @@ If `# Agent` is missing, the agent may **append** it; never alter lines above.
 
 | Node kind | Typical content |
 |-----------|-----------------|
-| **Collection** | Name, purpose of the group, list of children, constraints that apply to the whole |
-| **Leaf** | Enough to implement **one** code file; maps 1:1 at compile |
+| **Collection** | Purpose, **in/out scope**, shared constraints, list of children |
+| **Leaf** | Purpose, **in/out scope** for **one** code file, decisive contracts; maps 1:1 at compile |
 
 **Working-memory budget:** each file stays roughly one screen of real content. Split rather than thicken.
 
@@ -164,8 +182,9 @@ If `# Agent` is missing, the agent may **append** it; never alter lines above.
 
 Prefer **constraints and ownership** over inventories. No required heading list.
 
-Useful: purpose, must-hold rules, boundaries, decisive controls, checks that prove the rules.  
-Avoid: complete API rosters, play-by-play algorithms, “and also handle…” catalogs that follow from a tighter rule.
+Useful: purpose, **in scope / out of scope**, must-hold rules, decisive controls, checks that prove the rules.  
+Avoid: complete API rosters, play-by-play algorithms, “and also handle…” catalogs that follow from a tighter rule.  
+Every file must answer **inside vs outside**; a purpose line alone is not enough if ownership is ambiguous.
 
 **“What it is not”** is not a default section; a rare boundary constraint is fine when it prevents a real mistake.
 
@@ -231,8 +250,9 @@ decompile_file(language_definition, one_code_file)
 **Inputs:** language def; **one** declared code file; decompile skill.  
 **Output:** **one** leaf MetaCode file of **constraints and ownership** for that file (not a line tour or full API roster).
 
-**Prefer:** purpose, invariants, boundaries, decisive contracts, checks.  
-**Avoid (in user zone):** complete public-symbol dumps; those may sit under `# Agent` if useful for navigation.
+**Prefer:** purpose, **in/out scope**, invariants, decisive contracts, checks.  
+**Avoid (in user zone):** complete public-symbol dumps; those may sit under `# Agent` if useful for navigation.  
+**If the code file is a kitchen sink:** do not force a single clean leaf — report **needs split** (or propose multiple leaves); MetaCode is not obliged to mirror bad modularization.
 
 ### 8.2 Building the tree
 
@@ -267,3 +287,4 @@ examples/<name>/
 | 0.5 | **MVP firm:** leaf meta file ↔ one code file; collections group only; decompile = one file → one leaf; non-programmer access = inspiration not hard rule |
 | 0.6 | Meta = **constraints** (not full enumeration); compile fills implied decisions; decompile recovers constraints/ownership |
 | 0.7 | Dual surfaces: product BDD-like (examples/rules) + developer architecture (leaf ↔ file) |
+| 0.8 | Every node must define in/out scope and boundaries; kitchen-sink decompile may refuse or split |
