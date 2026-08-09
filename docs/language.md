@@ -38,6 +38,33 @@ If the **constraints are right**, most remaining decisions are **implied** and m
 
 **Decompile test:** lift **constraints and ownership**, not a dump of every public symbol (symbol lists are optional Agent/debug aids, not the ideal user zone).
 
+### 1.2 Two constraint surfaces (product vs architecture)
+
+Top-down and developer concerns are **both** first-class; they sit at different depths of the same tree.
+
+| Surface | Who typically writes | What constraints look like | Tree place |
+|---------|----------------------|----------------------------|------------|
+| **Product (BDD-like)** | Non-programmers and anyone stating intent | Behavior **by example** and/or **simple rules** (“when I press space, done flips”; “list survives restart”) | Upper **collections** and product-facing nodes |
+| **Architecture** | Developers | Structure and modularization — especially **one leaf meta file ↔ one source file**, ownership, allowed dependencies | **Leaves** (and structural collections that only group those leaves) |
+
+**Product surface (akin to BDD):**  
+Specify *what must be true for the user* via examples and short rules. That is the non-programmer-accessible portion. It does **not** require naming modules or files. Compile (and lower meta) must not violate these constraints.
+
+**Architecture surface:**  
+Developers add constraints on *how the system is cut*: file boundaries, what a module owns, what it must not pull in. The MVP **1:1 leaf meta ↔ one code file** rule is the primary architectural constraint — it forces modularization to be explicit and decompilable.
+
+```text
+Product constraints (examples + rules)     ← BDD-like, often collections / upper nodes
+        ↓ refine / attach
+Architecture constraints (file-shaped leaves)  ← developer; 1 meta file : 1 code file
+        ↓ compile
+Source files
+```
+
+Neither surface should fully enumerate implementation. Product does not list helpers; architecture pins **file-level** ownership and contracts, not every internal function (unless a developer chooses finer leaves later).
+
+A node may carry both kinds of constraint when useful (e.g. a leaf that is both “the store file” and “must persist after every change”), but authors should not force product people to invent file trees, or force every product rule into a leaf before architecture is designed.
+
 ---
 
 ## 2. MVP structural constraint (firm)
@@ -231,3 +258,4 @@ examples/<name>/
 | 0.1–0.4 | Earlier stubs (budget, zones, non-programmer emphasis) |
 | 0.5 | **MVP firm:** leaf meta file ↔ one code file; collections group only; decompile = one file → one leaf; non-programmer access = inspiration not hard rule |
 | 0.6 | Meta = **constraints** (not full enumeration); compile fills implied decisions; decompile recovers constraints/ownership |
+| 0.7 | Dual surfaces: product BDD-like (examples/rules) + developer architecture (leaf ↔ file) |

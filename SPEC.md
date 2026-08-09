@@ -32,11 +32,16 @@ Create an **intermediate higher-level language** (working name: MetaCode) for hi
 
 > **Meta is source. AI write is compile. Classic code is machine language.**
 
-**Meta pins constraints; compile fills the rest.** The language’s job is the rules, invariants, and ownership boundaries that must hold — not a complete enumeration of coding decisions and behaviors. If constraints are right, most remaining choices are implied and may be decided at compile (and reported).
+**Meta pins constraints; compile fills the rest.** Not a full enumeration of coding decisions.
 
-**MVP firm constraint:** a **leaf** MetaCode file compiles to **exactly one** source code file. **Collection** meta files group children and do not emit code (MVP). Decompile MVP: **one code file → one leaf** meta file (constraints/ownership, not an API dump).
+**Two constraint surfaces (same tree):**
 
-**Inspiration (not a hard rule):** keep meta approachable for non-programmers at upper nodes. Precision at leaves is fine.
+1. **Product (BDD-like)** — behavior by **example** and/or **simple rules**. Top-down; accessible to non-programmers. Lives mainly in upper **collections** / product nodes.  
+2. **Architecture (developer)** — modularization and ownership. MVP: **one leaf meta file ↔ one source file**. Developers constrain how the code is cut; decompile recovers that cut.
+
+If constraints are right, most remaining choices are implied at compile (and reported).
+
+**MVP firm:** leaf → exactly one code file; collections group only (no emit); decompile = one code file → one leaf (constraints/ownership, not an API dump).
 
 | Layer | Role |
 |---|---|
@@ -105,16 +110,16 @@ MVP: **leaf ↔ one code file**, collections as groups only, skills for compile/
 
 ## 2. Principles
 
-### 2.1 Hierarchy bottoms out at code files
+### 2.1 Hierarchy: product above, architecture at leaves
 
-Progressive hierarchical description is the unit of work. The tree has two node kinds for MVP:
+Progressive hierarchical description is the unit of work. Two node kinds (MVP):
 
-- **Collection** — abstract grouping; no code emit  
-- **Leaf** — **one meta file ↔ one code file** at compile/decompile  
+- **Collection** — abstract grouping / product overview; no code emit; natural home for BDD-like examples and simple rules  
+- **Leaf** — **one meta file ↔ one code file**; natural home for developer architecture constraints  
 
-Refine until leaves are file-shaped. Collections (e.g. product root) organize; they are not a substitute for leaves.
+Top-down product constraints flow down; developers attach or refine **file-shaped** leaves so modularization is explicit. Collections are not a substitute for leaves when emitting code.
 
-**Working-memory budget:** each meta file stays small. Detail goes to children. Normative: [`docs/language.md`](docs/language.md).
+**Working-memory budget:** each meta file stays small. Normative: [`docs/language.md`](docs/language.md) §1.2.
 
 ### 2.2 Constraints in meta; freedom at compile
 
@@ -360,3 +365,4 @@ Stages are **skill-mediated** until tooling exists. Each arrow is a closed-conte
 | 2026-08-09 | Non-programmer authors; LLM fills implementation; hierarchy as multi-node tree (sections as stand-in); format deferred; language v0.3. |
 | 2026-08-09 | MVP: leaf meta ↔ one code file; collections group only; decompile per file; non-programmer access = inspiration; language v0.5. |
 | 2026-08-09 | Constraints-first meta (not full enumeration); language v0.6. |
+| 2026-08-09 | Dual surfaces: product BDD-like + developer architecture (leaf↔file); language v0.7. |
